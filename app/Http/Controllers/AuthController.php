@@ -12,34 +12,44 @@ use Illuminate\Support\Facades\Log as LaravelLog; // Import the correct Log faca
 class AuthController extends Controller
 {
     public function register(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
+{
+    // Validate the registration data
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:6',
+    ]);
 
-        $user = new User();
-        $user->name = $validatedData['name'];
-        $user->email = $validatedData['email'];
-        $user->password = Hash::make($validatedData['password']); // Hash the password
-        $user->save();
-
-        $token = JWTAuth::fromUser($user);
-
-        Log::create([
-            'date' => now(),
-            'action' => 'register',
-            'action_id' => 1,
-            'id_user' => $user->id
-        ]);
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60,
-        ], 201);
+    // Check if the password is common
+    $commonPasswords = file(storage_path('common-passwords/10k-most-common.txt'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if (in_array($validatedData['password'], $commonPasswords)) {
+        return response()->json(['error' => 'The password you provided is too common. Please choose a more secure password.'], 400);
     }
+
+    // Proceed with registration if the password is not common
+    $user = new User();
+    $user->name = $validatedData['name'];
+    $user->email = $validatedData['email'];
+    $user->password = Hash::make($validatedData['password']); // Hash the password
+    $user->save();
+
+    $token = JWTAuth::fromUser($user);
+
+    // Log the registration action
+    Log::create([
+        'date' => now(),
+        'action' => 'register',
+        'action_id' => 1,
+        'id_user' => $user->id
+    ]);
+
+    return response()->json([
+        'access_token' => $token,
+        'token_type' => 'bearer',
+        'expires_in' => JWTAuth::factory()->getTTL() * 60,
+    ], 201);
+}
+
 
     public function login(Request $request)
     {
@@ -80,15 +90,35 @@ class AuthController extends Controller
    
     public function me(Request $request)
     {
-        // Check if the user is authenticated
-        $user = auth()->user(); // Get the authenticated user using JWT
+        try {
+            // Récupère l'utilisateur à partir du token JWT
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+            }
     
-        if ($user) {
-            return response()->json($user); // Return the user's info if authenticated
-        } else {
-            // Log failed authentication using Laravel's logging system
-            LaravelLog::info('Authentication failed for token: ' . $request->bearerToken());
-            return response()->json(['message' => 'Unauthorized'], 401);
+            // Crée un log pour la consultation du profil
+            $log = Log::create([
+                'id_user' => $user->id,
+                'action_id' => 3, // ID de la consultation de profil
+                'action' => 'consultation profil',
+                'date' => now(),
+            ]);
+    
+            // Retourne les informations de l'utilisateur
+            return response()->json([
+                'email' => $user->email,
+                'nom' => $user->name,
+                'statut' => $user->status, // Si 'status' existe dans la table 'users'
+                'date_creation' => $user->created_at,
+            ]);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'Token expiré'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'Token invalide'], 401);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'Token absent'], 401);
         }
-    }    
+    }
+    
+
 }

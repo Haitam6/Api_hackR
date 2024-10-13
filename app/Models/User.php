@@ -25,42 +25,48 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  *
  * @package App\Models
  */
-class User extends Model implements JWTSubject // Implement JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable; // Use Notifiable if you are sending notifications
-
-    protected $table = 'users';
+    protected $table = 'users';  // The name of your table
+    protected $primaryKey = 'id'; // The primary key of your table
+    public $timestamps = false;  // Disable automatic timestamps if not needed
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
+        'role_id' => 'int'  // Assuming `role_id` is an integer
     ];
 
     protected $fillable = [
-        'name',
+        'nom',               // Assuming 'nom' is for user's name
         'email',
-        'email_verified_at',
-        'password',
-        'remember_token',
+        'role_id',
+        'motDePasse',        // Assuming 'motDePasse' is for user's password
+        'statut',            // Assuming 'statut' refers to a status field
+        'dateCreation'       // Assuming 'dateCreation' is a field for creation date
     ];
-
-    public function logs()
-    {
-        return $this->hasMany(Log::class, 'id_user');
-    }
 
     // Implement the methods required by the JWTSubject interface
     public function getJWTIdentifier()
     {
-        return $this->getKey(); // This returns the user's primary key (id)
+        return $this->getKey(); // Return the user's primary key (id)
     }
 
     public function getJWTCustomClaims()
     {
-        return []; // You can add any additional claims here if needed
+        return []; // Add any custom claims here if needed
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->motDePasse; // This maps to the 'motDePasse' for password authentication
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class); // Assuming there's a Role model linked with the user
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'id_user'); // Assuming the `Log` model is related to `User`
     }
 }
