@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
 
 class PasswordCheckController extends Controller
 {
@@ -44,6 +46,11 @@ class PasswordCheckController extends Controller
      */
     public function isCommonPassword(Request $request)
     {
+        // Vérifie si l'utilisateur est authentifié
+        if (!Auth::check()) {
+            return response()->json(['error' => 'You are not authentified'], 401);
+        }
+
         // Validate the request to ensure the password is provided
         $validatedData = $request->validate([
             'password' => 'required|string',
@@ -60,11 +67,26 @@ class PasswordCheckController extends Controller
         // Read file contents into an array
         $commonPasswords = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
+        // Log the action of checking password
+        $this->logAction(Auth::id(), 'check_password', 8);
+
         // Check if the password exists in the array
         if (in_array($password, $commonPasswords)) {
             return response()->json(['message' => 'The password is common'], 200);
         } else {
             return response()->json(['message' => 'The password is not common'], 200);
+        }
+    }
+
+    private function logAction($userId, $action, $actionId)
+    {
+        if ($userId) {
+            Log::create([
+                'date' => now(),
+                'action' => $action,
+                'action_id' => $actionId,
+                'id_user' => $userId,
+            ]);
         }
     }
 }
