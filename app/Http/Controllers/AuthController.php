@@ -15,7 +15,7 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/register",
      *     summary="Register a new user",
-     *     tags={"Auth"},
+     *     tags={"Authentification"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -72,12 +72,12 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/login",
      *     summary="User login",
-     *     tags={"Auth"},
+     *     tags={"Authentification"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="email", type="string", example="haitamelqassimi@example.com"),
-     *             @OA\Property(property="password", type="string", example="password123")
+     *             @OA\Property(property="email", type="string", example="Haitam_elqassimi10@outlook.fr"),
+     *             @OA\Property(property="password", type="string", example="haitam")
      *         )
      *     ),
      *     @OA\Response(
@@ -115,7 +115,7 @@ class AuthController extends Controller
      * @OA\Get(
      *     path="/api/users/me",
      *     summary="Get current user profile",
-     *     tags={"Auth"},
+     *     tags={"Authentification"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
@@ -137,7 +137,7 @@ class AuthController extends Controller
                 return response()->json(['error' => 'Utilisateur non authentifié'], 401);
             }
 
-            $this->logAction($user->id, 'consultation profil', 4);
+            $this->logAction($user->id, 'consultation profil', 14);
 
             return response()->json([
                 'email' => $user->email,
@@ -159,7 +159,7 @@ class AuthController extends Controller
         Log::create([
             'date' => now(),
             'action' => $action,
-            'action_id' => $actionId,
+            'fonctionnalite_id' => $actionId,
             'id_user' => $userId,
         ]);
     }

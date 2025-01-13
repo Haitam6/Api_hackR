@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\Utils;
+use App\Models\Droit;
+use App\Models\Fonctionnalites;
+use App\Models\Role;
 
 class DdosController extends Controller
 {
@@ -14,7 +17,8 @@ class DdosController extends Controller
  * @OA\Post(
  *     path="/api/Ddos",
  *     summary="Simulate a high traffic load on a target server",
- *     tags={"Load Test"},
+ *     tags={"Fonctionnalités"},
+ *     security={{"bearerAuth":{}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -58,39 +62,59 @@ class DdosController extends Controller
  *     )
  * )
  */
+    function verifRoles($fonctionnalite_id, $current_role_id)
+    {
+        try {
+            $droit = Droit::where('fonctionnalite_id', $fonctionnalite_id)
+                        ->where('role_id', $current_role_id)
+                        ->first();
+
+            if (!$droit) {
+                return false; 
+            }
+
+            return true; 
+        } catch (\Exception $e) {
+            // En cas d'erreur, on refuse l'accès pour des raisons de sécurité
+            return false;
+        }
+    }
 
     public function DdosTest(Request $request)
     {
-        // Valider les champs requis
+        $fonctionnalite_id = 10;
+        
         $validatedData = $request->validate([
             'url' => 'required|url',
-            'requests' => 'required|integer|min:1|max:100', // Ajustez la limite si nécessaire
+            'requests' => 'required|integer|min:1|max:100',
         ]);
 
         $url = $validatedData['url'];
         $requests = $validatedData['requests'];
 
-        // Authentification requise
+        
         $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'You are not authenticated'], 401);
         }
 
-        // Log de l'action
+        if (!$this->verifRoles($fonctionnalite_id, $user->role_id)) {
+            return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela.'], 401);
+        }
+
+        
         $this->logAction($user->id, 'Ddos', 10);
 
-        // Initialiser Guzzle
+        
         $client = new Client();
 
-        // Générer les promesses pour des requêtes asynchrones
         $promises = [];
         for ($i = 0; $i < $requests; $i++) {
             $promises[] = $client->getAsync($url);
         }
 
-        // Attendre que toutes les promesses soient résolues
         $results = [];
-        $responses = Promise\settle($promises)->wait();
+        $responses = Utils::settle($promises)->wait();
         foreach ($responses as $response) {
             if ($response['state'] === 'fulfilled') {
                 $results[] = [
@@ -116,7 +140,7 @@ class DdosController extends Controller
         Log::create([
             'date' => now(),
             'action' => $action,
-            'action_id' => $actionId,
+            'fonctionnalite_id' => $actionId,
             'id_user' => $userId,
         ]);
     }

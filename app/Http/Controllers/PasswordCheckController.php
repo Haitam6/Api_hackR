@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
+use App\Models\Droit;
+use App\Models\Fonctionnalites;
+use App\Models\Role;
 
 class PasswordCheckController extends Controller
 {
@@ -12,7 +15,8 @@ class PasswordCheckController extends Controller
      * @OA\Post(
      *     path="/api/check-password",
      *     summary="Check if a password is common",
-     *     tags={"Password Check"},
+     *     tags={"Fonctionnalités"},
+     *    security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -44,14 +48,36 @@ class PasswordCheckController extends Controller
      *     )
      * )
      */
+
+    function verifRoles($fonctionnalite_id, $current_role_id)
+    {
+        try {
+            $droit = Droit::where('fonctionnalite_id', $fonctionnalite_id)
+                        ->where('role_id', $current_role_id)
+                        ->first();
+
+            if (!$droit) {
+                return false; 
+            }
+
+            return true; 
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     public function isCommonPassword(Request $request)
     {
-        // Vérifie si l'utilisateur est authentifié
+        $fonctionnalite_id = 8; 
+        $user = Auth::user();
         if (!Auth::check()) {
             return response()->json(['error' => 'You are not authentified'], 401);
         }
 
-        // Validate the request to ensure the password is provided
+        if (!$this->verifRoles($fonctionnalite_id, $user->role_id)) {
+            return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela.'], 401);
+        }
+
         $validatedData = $request->validate([
             'password' => 'required|string',
         ]);
@@ -59,18 +85,14 @@ class PasswordCheckController extends Controller
         $password = $validatedData['password'];
         $filePath = storage_path('common-passwords/10k-most-common.txt');
 
-        // Check if file exists
         if (!file_exists($filePath)) {
             return response()->json(['error' => 'Password list file not found'], 500);
         }
 
-        // Read file contents into an array
         $commonPasswords = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-        // Log the action of checking password
         $this->logAction(Auth::id(), 'check_password', 8);
 
-        // Check if the password exists in the array
         if (in_array($password, $commonPasswords)) {
             return response()->json(['message' => 'The password is common'], 200);
         } else {
@@ -84,7 +106,7 @@ class PasswordCheckController extends Controller
             Log::create([
                 'date' => now(),
                 'action' => $action,
-                'action_id' => $actionId,
+                'fonctionnalite_id' => $actionId,
                 'id_user' => $userId,
             ]);
         }

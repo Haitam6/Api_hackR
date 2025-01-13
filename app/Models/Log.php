@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property Carbon $date
  * @property string $action
- * @property int $action_id
+ * @property int $fonctionnalite_id
  * @property int $id_user
  * 
  * @property User $user
@@ -29,19 +29,24 @@ class Log extends Model
 
 	protected $casts = [
 		'date' => 'datetime',
-		'action_id' => 'int',
+		'fonctionnalite_id' => 'int',
 		'id_user' => 'int'
 	];
 
 	protected $fillable = [
 		'date',
 		'action',
-		'action_id',
+		'fonctionnalite_id',
 		'id_user'
 	];
 
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'id_user');
+	}
+
+	public function fonctionnalite()
+	{
+		return $this->belongsTo(Fonctionnalite::class, 'fonctionnalite_id');
 	}
 }

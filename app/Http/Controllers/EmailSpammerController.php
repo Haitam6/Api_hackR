@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log as LaravelLog;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Droit;
+use App\Models\Fonctionnalites;
+use App\Models\Role;
 
 
 class EmailSpammerController extends Controller
@@ -15,14 +18,15 @@ class EmailSpammerController extends Controller
      * @OA\Post(
      *     path="/api/emails/spam",
      *     summary="Spam emails to a recipient",
-     *     tags={"Email Spammer"},
+     *     tags={"Fonctionnalités"},
+     *    security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="recipient_email", type="string", example="recipient@example.com"),
+     *             @OA\Property(property="recipient_email", type="string", example="haitam.elqassimi@my-digital-school.org"),
      *             @OA\Property(property="subject", type="string", example="Spam Subject"),
      *             @OA\Property(property="content", type="string", example="This is the spam content."),
-     *             @OA\Property(property="count", type="integer", example=10)
+     *             @OA\Property(property="count", type="integer", example=5)
      *         )
      *     ),
      *     @OA\Response(
@@ -43,6 +47,23 @@ class EmailSpammerController extends Controller
      *     )
      * )
      */
+    function verifRoles($fonctionnalite_id, $current_role_id)
+    {
+        try {
+            $droit = Droit::where('fonctionnalite_id', $fonctionnalite_id)
+                        ->where('role_id', $current_role_id)
+                        ->first();
+
+            if (!$droit) {
+                return false; 
+            }
+
+            return true; 
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    
     public function spamEmails(Request $request)
     {
         $validatedData = $request->validate([
@@ -73,8 +94,16 @@ class EmailSpammerController extends Controller
                             ->subject($subject);
                 });
 
-                // Log the email spam action
+                $fonctionnalite_id = 5;
                 $user = Auth::user();
+
+                if (!$user) {
+                    return response()->json(['error' => 'User not authenticated'], 401);
+                }
+
+                if (!$this->verifRoles($fonctionnalite_id, $user->role_id)) {
+                    return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela.'], 401);
+                }
                 $this->logAction($user ? $user->id : null, 'email_spam', 5);
             }
             return response()->json([
@@ -96,7 +125,7 @@ class EmailSpammerController extends Controller
         Log::create([
             'date' => now(),
             'action' => $action,
-            'action_id' => $actionId,
+            'fonctionnalite_id' => $actionId,
             'id_user' => $userId,
         ]);
     }

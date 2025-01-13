@@ -9,7 +9,7 @@
         "/api/register": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "Authentification"
                 ],
                 "summary": "Register a new user",
                 "operationId": "8a56853624e025573120a09a4c75d468",
@@ -74,7 +74,7 @@
         "/api/login": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "Authentification"
                 ],
                 "summary": "User login",
                 "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
@@ -86,11 +86,11 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "haitamelqassimi@example.com"
+                                        "example": "Haitam_elqassimi10@outlook.fr"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "password123"
+                                        "example": "haitam"
                                     }
                                 },
                                 "type": "object"
@@ -132,7 +132,7 @@
         "/api/users/me": {
             "get": {
                 "tags": [
-                    "Auth"
+                    "Authentification"
                 ],
                 "summary": "Get current user profile",
                 "operationId": "023eae4c11807c8d3edd0903770b1e64",
@@ -177,13 +177,120 @@
                 ]
             }
         },
-        "/api/domains/{domain}": {
+        "/api/Ddos": {
+            "post": {
+                "tags": [
+                    "Fonctionnalités"
+                ],
+                "summary": "Simulate a high traffic load on a target server",
+                "operationId": "210be8edfdf3c5b6815f859d6cf388bd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "url",
+                                    "requests"
+                                ],
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://example.com"
+                                    },
+                                    "requests": {
+                                        "type": "integer",
+                                        "maximum": 100,
+                                        "minimum": 1,
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Load test completed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Load test completed successfully."
+                                        },
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "status": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    },
+                                                    "reason": {
+                                                        "type": "string",
+                                                        "example": "OK"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You are not authenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The url and requests fields are required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subdomains/{domain}": {
             "get": {
                 "tags": [
-                    "Domains"
+                    "Fonctionnalités"
                 ],
                 "summary": "Retrieve subdomains of a given domain",
-                "operationId": "c86e628310813e3204aa7c3501afefba",
+                "operationId": "f1f17844eada1155bc07a22c602bf465",
                 "parameters": [
                     {
                         "name": "domain",
@@ -246,16 +353,21 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/emails/spam": {
             "post": {
                 "tags": [
-                    "Email Spammer"
+                    "Fonctionnalités"
                 ],
                 "summary": "Spam emails to a recipient",
-                "operationId": "dc4411de350751d1ef0f40f37ed79cd6",
+                "operationId": "54ad4fc49a13dd4aa0000df5a7ffa54f",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -264,7 +376,7 @@
                                 "properties": {
                                     "recipient_email": {
                                         "type": "string",
-                                        "example": "recipient@example.com"
+                                        "example": "haitam.elqassimi@my-digital-school.org"
                                     },
                                     "subject": {
                                         "type": "string",
@@ -276,7 +388,7 @@
                                     },
                                     "count": {
                                         "type": "integer",
-                                        "example": 10
+                                        "example": 5
                                     }
                                 },
                                 "type": "object"
@@ -325,16 +437,21 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/verify-email/{email}": {
             "get": {
                 "tags": [
-                    "Email Verification"
+                    "Fonctionnalités"
                 ],
                 "summary": "Verify email using Hunter.io API",
-                "operationId": "ca2d05a7147142f8bd89559bfed8ec34",
+                "operationId": "d14d57938c126dcdce83afc1be35903f",
                 "parameters": [
                     {
                         "name": "email",
@@ -406,38 +523,100 @@
             }
         },
         "/api/generate-fake-identity": {
-            "post": {
+            "get": {
                 "tags": [
-                    "Identity Generation"
+                    "Fonctionnalités"
                 ],
-                "summary": "Generate a fake identity",
-                "operationId": "05bf339abffb12bfc3ba5c74420becb1",
+                "summary": "Generate a Fake Identity",
+                "description": "Generates a fake identity using the Faker library and returns the generated data.",
+                "operationId": "generateFakeIdentity",
                 "responses": {
                     "200": {
-                        "description": "Fake identity generated successfully",
+                        "description": "Successfully generated fake identity",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "name": {
-                                            "type": "string",
-                                            "example": "John Doe"
+                                            "description": "Generated fake name",
+                                            "type": "string"
                                         },
                                         "email": {
-                                            "type": "string",
-                                            "example": "john.doe@example.com"
+                                            "description": "Generated fake email",
+                                            "type": "string"
                                         },
                                         "address": {
-                                            "type": "string",
-                                            "example": "123 Main St, Springfield, USA"
+                                            "description": "Generated fake address",
+                                            "type": "string"
                                         },
                                         "phone": {
-                                            "type": "string",
-                                            "example": "+1234567890"
+                                            "description": "Generated fake phone number",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
                                 }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User is not authenticated or does not have the right to access the functionality",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - User does not have the necessary permissions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/random-image": {
+            "get": {
+                "tags": [
+                    "Fonctionnalités"
+                ],
+                "summary": "Fetch a random image",
+                "operationId": "2f18c87654589cee5a98348703991d44",
+                "responses": {
+                    "200": {
+                        "description": "Random image retrieved successfully",
+                        "content": {
+                            "image/jpeg": {
+                                "schema": [
+                                    {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                ]
                             }
                         }
                     },
@@ -449,7 +628,23 @@
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Unauthorized"
+                                            "example": "You are not authenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch image",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to fetch the image."
                                         }
                                     },
                                     "type": "object"
@@ -457,16 +652,21 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/check-password": {
             "post": {
                 "tags": [
-                    "Password Check"
+                    "Fonctionnalités"
                 ],
                 "summary": "Check if a password is common",
-                "operationId": "ae5b71727a6f82d5e25d693203f45cab",
+                "operationId": "c161d6c59a7e9f3b935b56a713b5d432",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -532,26 +732,97 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/generate-password": {
+            "get": {
+                "tags": [
+                    "Fonctionnalités"
+                ],
+                "summary": "Generate a Secure Password",
+                "description": "Generates a secure password with at least one uppercase letter, one lowercase letter, one number, and one special character.",
+                "operationId": "generateSecurePassword",
+                "parameters": [
+                    {
+                        "name": "length",
+                        "in": "query",
+                        "description": "The length of the generated password (default is 12 if not provided)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 12
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully generated secure password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "password": {
+                                            "description": "Generated password",
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "description": "Success message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User does not have the right to generate a password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/phish": {
             "post": {
                 "tags": [
-                    "Password Generation"
+                    "Fonctionnalités"
                 ],
-                "summary": "Generate a secure random password",
-                "operationId": "ef66beb15c20f5a1a35fdc38a177a112",
+                "summary": "Phishing",
+                "description": "permet d'injecter un script de phishing dans une page web",
+                "operationId": "c014e780e1ed02c0dd4421185c85c0a8",
                 "requestBody": {
-                    "required": false,
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "length": {
-                                        "description": "Length of the password",
-                                        "type": "integer",
-                                        "example": 12
+                                    "url": {
+                                        "description": "The URL of the webpage to inject the script.",
+                                        "type": "string",
+                                        "example": "https://fr-fr.facebook.com/login/web/"
                                     }
                                 },
                                 "type": "object"
@@ -561,18 +832,95 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Password generated successfully",
+                        "description": "HTML page with the phishing script injected.",
+                        "content": {
+                            "text/html": {
+                                "example": "<html><head></head><body>...</body></html>"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request. Validation failed.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "password": {
+                                        "error": {
                                             "type": "string",
-                                            "example": "A1b!cdefghij"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Password generated successfully!"
+                                            "example": "The url field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/giveRules": {
+            "post": {
+                "tags": [
+                    "Roles Management"
+                ],
+                "summary": "Assign or modify rights for a role",
+                "description": "Assigns or modifies the rights (droit) of a role for a specific functionality.",
+                "operationId": "giveRules",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fonctionnalite_id",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "fonctionnalite_id": {
+                                        "description": "ID of the functionality",
+                                        "type": "integer"
+                                    },
+                                    "role_id": {
+                                        "description": "ID of the role to be assigned",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully assigned or modified rights",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "description": "Success message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - The right already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -581,14 +929,30 @@
                         }
                     },
                     "401": {
-                        "description": "User not authenticated",
+                        "description": "Unauthorized - User does not have the right to assign roles",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
-                                            "type": "string",
-                                            "example": "Unauthorized"
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -596,38 +960,58 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Fonctionnalite": {
+                "required": [
+                    "nom_fonctionnalite"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID de la fonctionnalité",
+                        "type": "integer"
+                    },
+                    "nom_fonctionnalite": {
+                        "description": "Nom de la fonctionnalité",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description de la fonctionnalité",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
     "tags": [
         {
-            "name": "Auth",
-            "description": "Auth"
+            "name": "Authentification",
+            "description": "Authentification"
         },
         {
-            "name": "Domains",
-            "description": "Domains"
+            "name": "Fonctionnalités",
+            "description": "Fonctionnalités"
         },
         {
-            "name": "Email Spammer",
-            "description": "Email Spammer"
-        },
-        {
-            "name": "Email Verification",
-            "description": "Email Verification"
-        },
-        {
-            "name": "Identity Generation",
-            "description": "Identity Generation"
-        },
-        {
-            "name": "Password Check",
-            "description": "Password Check"
-        },
-        {
-            "name": "Password Generation",
-            "description": "Password Generation"
+            "name": "Roles Management",
+            "description": "Roles Management"
         }
     ]
 }

@@ -41,7 +41,8 @@ class User extends Authenticatable implements JWTSubject
         'role_id',
         'motDePasse',        // Assuming 'motDePasse' is for user's password
         'statut',            // Assuming 'statut' refers to a status field
-        'dateCreation'       // Assuming 'dateCreation' is a field for creation date
+        'dateCreation',
+        'role_id',       
     ];
 
     // Implement the methods required by the JWTSubject interface

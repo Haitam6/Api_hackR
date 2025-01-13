@@ -6,42 +6,81 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
 use Faker\Factory as Faker;
+use App\Models\Droit;
+use App\Models\Fonctionnalites;
+use App\Models\Role;
+
 
 class FakeIdentityController extends Controller
 {
-    /**
-     * @OA\Post(
+     /**
+     * @OA\Get(
      *     path="/api/generate-fake-identity",
-     *     summary="Generate a fake identity",
-     *     tags={"Identity Generation"},
+     *     summary="Generate a Fake Identity",
+     *     description="Generates a fake identity using the Faker library and returns the generated data.",
+     *     operationId="generateFakeIdentity",
+     *     tags={"Fonctionnalités"},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Fake identity generated successfully",
+     *         description="Successfully generated fake identity",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="name", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", example="john.doe@example.com"),
-     *             @OA\Property(property="address", type="string", example="123 Main St, Springfield, USA"),
-     *             @OA\Property(property="phone", type="string", example="+1234567890"),
+     *             @OA\Property(property="name", type="string", description="Generated fake name"),
+     *             @OA\Property(property="email", type="string", description="Generated fake email"),
+     *             @OA\Property(property="address", type="string", description="Generated fake address"),
+     *             @OA\Property(property="phone", type="string", description="Generated fake phone number")
      *         )
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="User not authenticated",
+     *         description="Unauthorized - User is not authenticated or does not have the right to access the functionality",
      *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *             type="object",
+     *             @OA\Property(property="error", type="string", description="Error message")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden - User does not have the necessary permissions",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", description="Error message")
      *         )
      *     )
      * )
      */
+    function verifRoles($fonctionnalite_id, $current_role_id)
+    {
+        try {
+            $droit = Droit::where('fonctionnalite_id', $fonctionnalite_id)
+                        ->where('role_id', $current_role_id)
+                        ->first();
+
+            if (!$droit) {
+                return false; 
+            }
+
+            return true; 
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
    
     public function generateFakeIdentity(Request $request)
     {
-        // Vérifie si l'utilisateur est authentifié
+        $fonctionnalite_id = 9;
+
+        $user = Auth::user();
+
         if (!Auth::check()) {
             return response()->json(['error' => 'You are not authentified'], 401);
         }
-        // Créer une instance de Faker
+
+        if (!$this->verifRoles($fonctionnalite_id, $user->role_id)) {
+            return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela.'], 401);
+        }
+        
         $faker = Faker::create();
 
         // Générer une identité fictive
@@ -51,14 +90,9 @@ class FakeIdentityController extends Controller
             'address' => $faker->address,
             'phone' => $faker->phoneNumber,
         ];
-
-        // Récupérer l'utilisateur authentifié
-        $user = Auth::user();
-
-        // Enregistrer l'action dans les logs
+        
         $this->logAction($user->id, 'generate_fake_identity', 9);
 
-        // Retourner la réponse JSON
         return response()->json($fakeIdentity);
     }
 
@@ -69,7 +103,7 @@ class FakeIdentityController extends Controller
             Log::create([
                 'date' => now(),
                 'action' => $action,
-                'action_id' => $actionId,
+                'fonctionnalite_id' => $actionId,
                 'id_user' => $userId,
             ]);
         }
