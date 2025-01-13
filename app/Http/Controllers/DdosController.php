@@ -75,7 +75,6 @@ class DdosController extends Controller
 
             return true; 
         } catch (\Exception $e) {
-            // En cas d'erreur, on refuse l'accès pour des raisons de sécurité
             return false;
         }
     }

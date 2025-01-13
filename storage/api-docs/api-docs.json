@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "HackR API",
-        "description": "HackR API Documentation",
+        "description": "Voici la documentation swagger de l'API HackR réalisé par Haitam El Qassimi",
         "version": "1.0.0"
     },
     "paths": {
@@ -168,6 +168,88 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/crawlerInformation": {
+            "post": {
+                "tags": [
+                    "Fonctionnalités"
+                ],
+                "summary": "Retrieve information using a search query",
+                "description": "Fetches search results using an external API and logs the action.",
+                "operationId": "6081a109027b7974e5f60bb0437e1ccb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "search": {
+                                        "description": "Search query for the crawler.",
+                                        "type": "string",
+                                        "example": "My digital school"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Search results returned successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "description": "The search results.",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You are not authenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred: [error details]"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [

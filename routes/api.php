@@ -13,6 +13,7 @@ use App\Http\Controllers\DdosController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PhishController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\CrawlerController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -30,3 +31,5 @@ Route::post('/Ddos', [DdosController::class, 'DdosTest']);
 Route::get('/random-image', [ImageController::class, 'fetchRandomImage']);
 Route::post('/phish', [PhishController::class, 'handlePhish']);
 Route::post('/phish/handlePhishData', [PhishController::class, 'handlePhishData']);
+Route::post('/crawlerInformation', [CrawlerController::class, 'crawlerInformation']);
+
