@@ -13,33 +13,33 @@ class LogController extends Controller
     /**
      * @OA\Post(
      *     path="/api/getLastLogs",
-     *     summary="Obtenir les derniers logs",
+     *     summary="Get the last logs",
      *     tags={"Logs"},
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *        name="nbLogs",
      *       in="query",
      *      required=true,
-     *    description="Nombre de logs à récupérer",
+     *    description="Number of logs to retrieve",
      *      @OA\Schema(type="integer")
      * ),
      * 
      * 
      *     @OA\Response(
      *         response=200,
-     *         description="Liste des logs"
+     *         description="List of the last logs"
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="Utilisateur non authentifié"
+     *         description="User not authenticated"
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Accès refusé"
+     *         description="Access denied"
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Erreur lors de la récupération des logs"
+     *         description="Error while retrieving logs"
      *     )
      * )
      */
@@ -52,7 +52,7 @@ class LogController extends Controller
         }
 
         if ($user->role_id != 1) {
-            return response()->json(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], 403);
+            return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela, seul l\'admin peut le faire.'], 403);
         }
 
         try {
@@ -75,34 +75,34 @@ class LogController extends Controller
     /**
      * @OA\Post(
      *     path="/api/getLogsByUser",
-     *     summary="Obtenir les logs par utilisateur",
+     *     summary="Get logs by user",
      *     tags={"Logs"},
      * security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="email", type="string", example="utilisateur@example.com")
+     *             @OA\Property(property="email", type="string", example="Haitam_elqassimi10@outlook.fr")
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Liste des logs de l'utilisateur"
+     *         description="List of logs for the user"
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="Utilisateur non authentifié"
+     *         description="User not authenticated"
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Accès refusé"
+     *         description="Access denied"
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Utilisateur non trouvé"
+     *         description="User not found"
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Erreur lors de la récupération des logs"
+     *         description="Error while retrieving logs"
      *     )
      * )
      */
@@ -115,7 +115,7 @@ class LogController extends Controller
         }
 
         if ($user->role_id != 1) {
-            return response()->json(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], 403);
+            return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela, seul l\'admin peut le faire.'], 401);
         }
 
         try {
@@ -144,34 +144,34 @@ class LogController extends Controller
     /**
      * @OA\Post(
      *     path="/api/getLogsByFunctionality",
-     *     summary="Obtenir les logs par fonctionnalité",
+     *     summary="Get logs by functionality",
      *     tags={"Logs"},
      * security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="nom_fonctionnalite", type="string", example="Consultation des logs")
+     *             @OA\Property(property="nom_fonctionnalite", type="string", example="Email spam")
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Liste des logs pour la fonctionnalité"
+     *         description="List of logs for the functionality"
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="Utilisateur non authentifié"
+     *         description="User not authenticated"
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Accès refusé"
+     *         description="Access denied"
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Fonctionnalité non trouvée"
+     *         description="Functionality not found"
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Erreur lors de la récupération des logs"
+     *         description="Error while retrieving logs"
      *     )
      * )
      */
@@ -184,7 +184,7 @@ class LogController extends Controller
         }
 
         if ($user->role_id != 1) {
-            return response()->json(['error' => 'Vous n\'avez pas les droits pour accéder à cette ressource'], 403);
+            return response()->json(['error' => 'Vous n\'avez pas le droit pour faire cela, seul l\'admin peut le faire.'], 403);
         }
 
         try {

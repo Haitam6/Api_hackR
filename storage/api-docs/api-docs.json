@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "HackR API",
-        "description": "Voici la documentation swagger de l'API HackR réalisé par Haitam El Qassimi",
+        "description": "Here is my Swagger documentation for my HackR API",
         "version": "1.0.0"
     },
     "paths": {
@@ -21,15 +21,15 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "Haitam Elqassimi"
+                                        "example": "Test Api"
                                     },
                                     "email": {
                                         "type": "string",
-                                        "example": "haitamelqassimi@example.com"
+                                        "example": "TestApi@test.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "password123"
+                                        "example": "Password123@"
                                     }
                                 },
                                 "type": "object"
@@ -145,7 +145,7 @@
                                     "properties": {
                                         "email": {
                                             "type": "string",
-                                            "example": "haitamelqassimi@example.com"
+                                            "example": "Haitam_elqassimi10@outlook.fr"
                                         },
                                         "nom": {
                                             "type": "string",
@@ -747,13 +747,13 @@
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Obtenir les derniers logs",
+                "summary": "Get the last logs",
                 "operationId": "97d1feb5c5933b77b3fc7f85eca19ea8",
                 "parameters": [
                     {
                         "name": "nbLogs",
                         "in": "query",
-                        "description": "Nombre de logs à récupérer",
+                        "description": "Number of logs to retrieve",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -762,16 +762,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Liste des logs"
+                        "description": "List of the last logs"
                     },
                     "401": {
-                        "description": "Utilisateur non authentifié"
+                        "description": "User not authenticated"
                     },
                     "403": {
-                        "description": "Accès refusé"
+                        "description": "Access denied"
                     },
                     "500": {
-                        "description": "Erreur lors de la récupération des logs"
+                        "description": "Error while retrieving logs"
                     }
                 },
                 "security": [
@@ -786,7 +786,7 @@
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Obtenir les logs par utilisateur",
+                "summary": "Get logs by user",
                 "operationId": "129c9863584278c918532bb4eecf1d2c",
                 "requestBody": {
                     "required": true,
@@ -796,7 +796,7 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "utilisateur@example.com"
+                                        "example": "Haitam_elqassimi10@outlook.fr"
                                     }
                                 },
                                 "type": "object"
@@ -806,19 +806,19 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Liste des logs de l'utilisateur"
+                        "description": "List of logs for the user"
                     },
                     "401": {
-                        "description": "Utilisateur non authentifié"
+                        "description": "User not authenticated"
                     },
                     "403": {
-                        "description": "Accès refusé"
+                        "description": "Access denied"
                     },
                     "404": {
-                        "description": "Utilisateur non trouvé"
+                        "description": "User not found"
                     },
                     "500": {
-                        "description": "Erreur lors de la récupération des logs"
+                        "description": "Error while retrieving logs"
                     }
                 },
                 "security": [
@@ -833,7 +833,7 @@
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Obtenir les logs par fonctionnalité",
+                "summary": "Get logs by functionality",
                 "operationId": "5295b289543fcbdc9738ac05e19a458a",
                 "requestBody": {
                     "required": true,
@@ -843,7 +843,7 @@
                                 "properties": {
                                     "nom_fonctionnalite": {
                                         "type": "string",
-                                        "example": "Consultation des logs"
+                                        "example": "Email spam"
                                     }
                                 },
                                 "type": "object"
@@ -853,19 +853,19 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Liste des logs pour la fonctionnalité"
+                        "description": "List of logs for the functionality"
                     },
                     "401": {
-                        "description": "Utilisateur non authentifié"
+                        "description": "User not authenticated"
                     },
                     "403": {
-                        "description": "Accès refusé"
+                        "description": "Access denied"
                     },
                     "404": {
-                        "description": "Fonctionnalité non trouvée"
+                        "description": "Functionality not found"
                     },
                     "500": {
-                        "description": "Erreur lors de la récupération des logs"
+                        "description": "Error while retrieving logs"
                     }
                 },
                 "security": [
@@ -1026,7 +1026,7 @@
                     "Fonctionnalités"
                 ],
                 "summary": "Phishing",
-                "description": "permet d'injecter un script de phishing dans une page web",
+                "description": "Phishing attack to capture user credentials.",
                 "operationId": "c014e780e1ed02c0dd4421185c85c0a8",
                 "requestBody": {
                     "required": true,

@@ -19,9 +19,9 @@ class AuthController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="Haitam Elqassimi"),
-     *             @OA\Property(property="email", type="string", example="haitamelqassimi@example.com"),
-     *             @OA\Property(property="password", type="string", example="password123")
+     *             @OA\Property(property="name", type="string", example="Test Api"),
+     *             @OA\Property(property="email", type="string", example="TestApi@test.com"),
+     *             @OA\Property(property="password", type="string", example="Password123@")
      *         )
      *     ),
      *     @OA\Response(
@@ -121,7 +121,7 @@ class AuthController extends Controller
      *         response=200,
      *         description="User profile retrieved successfully",
      *         @OA\JsonContent(
-     *             @OA\Property(property="email", type="string", example="haitamelqassimi@example.com"),
+     *             @OA\Property(property="email", type="string", example="Haitam_elqassimi10@outlook.fr"),
      *             @OA\Property(property="nom", type="string", example="Haitam Elqassimi"),
      *             @OA\Property(property="statut", type="string", example="active"),
      *             @OA\Property(property="date_creation", type="string", format="date-time", example="2023-01-01T00:00:00Z")

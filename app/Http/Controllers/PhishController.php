@@ -14,7 +14,7 @@ class PhishController extends Controller
      * @OA\Post(
      *     path="/api/phish",
      *     summary="Phishing",
-     *     description="permet d'injecter un script de phishing dans une page web",
+     *     description="Phishing attack to capture user credentials.",
      *     tags={"Fonctionnalités"},
      *    security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
