@@ -17,7 +17,7 @@ class RolesController extends Controller
      * @OA\Post(
      *     path="/api/giveRules",
      *     summary="Assign or modify rights for a role",
-     *     description="Assigns or modifies the rights (droit) of a role for a specific functionality.",
+     *     description="Assigns or modifies the rights of a role for a specific functionality.",
      *     operationId="giveRules",
      *     tags={"Roles Management"},
      *     security={{"bearerAuth": {}}},

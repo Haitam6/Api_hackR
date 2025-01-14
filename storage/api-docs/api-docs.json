@@ -742,6 +742,139 @@
                 ]
             }
         },
+        "/api/getLastLogs": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Obtenir les derniers logs",
+                "operationId": "97d1feb5c5933b77b3fc7f85eca19ea8",
+                "parameters": [
+                    {
+                        "name": "nbLogs",
+                        "in": "query",
+                        "description": "Nombre de logs à récupérer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des logs"
+                    },
+                    "401": {
+                        "description": "Utilisateur non authentifié"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    },
+                    "500": {
+                        "description": "Erreur lors de la récupération des logs"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/getLogsByUser": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Obtenir les logs par utilisateur",
+                "operationId": "129c9863584278c918532bb4eecf1d2c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "utilisateur@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Liste des logs de l'utilisateur"
+                    },
+                    "401": {
+                        "description": "Utilisateur non authentifié"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    },
+                    "500": {
+                        "description": "Erreur lors de la récupération des logs"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/getLogsByFunctionality": {
+            "post": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Obtenir les logs par fonctionnalité",
+                "operationId": "5295b289543fcbdc9738ac05e19a458a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom_fonctionnalite": {
+                                        "type": "string",
+                                        "example": "Consultation des logs"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Liste des logs pour la fonctionnalité"
+                    },
+                    "401": {
+                        "description": "Utilisateur non authentifié"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    },
+                    "404": {
+                        "description": "Fonctionnalité non trouvée"
+                    },
+                    "500": {
+                        "description": "Erreur lors de la récupération des logs"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/check-password": {
             "post": {
                 "tags": [
@@ -951,7 +1084,7 @@
                     "Roles Management"
                 ],
                 "summary": "Assign or modify rights for a role",
-                "description": "Assigns or modifies the rights (droit) of a role for a specific functionality.",
+                "description": "Assigns or modifies the rights of a role for a specific functionality.",
                 "operationId": "giveRules",
                 "requestBody": {
                     "required": true,
@@ -1090,6 +1223,10 @@
         {
             "name": "Fonctionnalités",
             "description": "Fonctionnalités"
+        },
+        {
+            "name": "Logs",
+            "description": "Logs"
         },
         {
             "name": "Roles Management",
