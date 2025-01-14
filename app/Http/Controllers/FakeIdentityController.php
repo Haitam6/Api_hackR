@@ -17,7 +17,7 @@ class FakeIdentityController extends Controller
      * @OA\Get(
      *     path="/api/generate-fake-identity",
      *     summary="Generate a Fake Identity",
-     *     description="Generates a fake identity using the Faker library and returns the generated data.",
+     *     description="Generates a fake identity and returns the generated data.",
      *     operationId="generateFakeIdentity",
      *     tags={"Fonctionnalités"},
      *     security={{"bearerAuth": {}}},
@@ -26,6 +26,12 @@ class FakeIdentityController extends Controller
      *         description="Successfully generated fake identity",
      *         @OA\JsonContent(
      *             type="object",
+     *             example={
+     *                 "name": "Kevin Niel",
+     *                 "email": "Niel_kevin@mds.com",
+     *                 "address": "5 avenue de la République, 75001 Paris",
+     *                 "phone": "+33 6 12 34 56 78"
+     *             },
      *             @OA\Property(property="name", type="string", description="Generated fake name"),
      *             @OA\Property(property="email", type="string", description="Generated fake email"),
      *             @OA\Property(property="address", type="string", description="Generated fake address"),
@@ -34,9 +40,10 @@ class FakeIdentityController extends Controller
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="Unauthorized - User is not authenticated or does not have the right to access the functionality",
+     *         description="Unauthorized - User is not authenticated",
      *         @OA\JsonContent(
      *             type="object",
+     *             example={"error": "You are not authenticated"},
      *             @OA\Property(property="error", type="string", description="Error message")
      *         )
      *     ),
@@ -45,6 +52,7 @@ class FakeIdentityController extends Controller
      *         description="Forbidden - User does not have the necessary permissions",
      *         @OA\JsonContent(
      *             type="object",
+     *             example={"error": "Vous n'avez pas le droit pour faire cela."},
      *             @OA\Property(property="error", type="string", description="Error message")
      *         )
      *     )

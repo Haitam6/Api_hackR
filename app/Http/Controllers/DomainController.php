@@ -18,33 +18,60 @@ class DomainController extends Controller
      *     path="/api/subdomains/{domain}",
      *     summary="Retrieve subdomains of a given domain",
      *     tags={"Fonctionnalités"},
-     *    security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="domain",
      *         in="path",
      *         required=true,
-     *         description="The domain name to fetch subdomains for",
-     *         @OA\Schema(type="string")
+     *         description="The domain name to fetch subdomains for.",
+     *         @OA\Schema(
+     *             type="string",
+     *             example="example.com"
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="List of subdomains",
+     *         description="List of subdomains retrieved successfully.",
      *         @OA\JsonContent(
-     *             @OA\Property(property="subdomains", type="array", @OA\Items(type="string"))
+     *             type="object",
+     *             @OA\Property(
+     *                 property="subdomains",
+     *                 type="array",
+     *                 @OA\Items(type="string", example="sub.example.com")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="User not authenticated.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="You are not authenticated.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Access forbidden due to insufficient permissions.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Vous n'avez pas le droit pour faire cela.")
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Domain not found",
+     *         description="Subdomains could not be retrieved.",
      *         @OA\JsonContent(
+     *             type="object",
      *             @OA\Property(property="error", type="string", example="Impossible de récupérer les sous-domaines.")
      *         )
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Server error",
+     *         description="Internal server error.",
      *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Internal server error.")
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Erreur interne du serveur."),
+     *             @OA\Property(property="details", type="string", example="Specific error details here.")
      *         )
      *     )
      * )

@@ -15,38 +15,79 @@ use App\Models\Role;
 class EmailSpammerController extends Controller
 {
     /**
-     * @OA\Post(
-     *     path="/api/emails/spam",
-     *     summary="Spam emails to a recipient",
-     *     tags={"Fonctionnalités"},
-     *    security={{"bearerAuth":{}}},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="recipient_email", type="string", example="TestSpam@test.com"),
-     *             @OA\Property(property="subject", type="string", example="Spam Subject"),
-     *             @OA\Property(property="content", type="string", example="This is the spam content."),
-     *             @OA\Property(property="count", type="integer", example=5)
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Emails sent successfully",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Emails sent successfully!"),
-     *             @OA\Property(property="email_count", type="integer", example=10)
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Failed to send emails",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="error", type="string", example="Failed to send emails"),
-     *             @OA\Property(property="details", type="string", example="Error details here")
-     *         )
-     *     )
-     * )
-     */
+ * @OA\Post(
+ *     path="/api/emails/spam",
+ *     summary="Spam multiple emails to a recipient",
+ *     description="This feature allows sending a specified number of emails to a recipient with a custom subject and content. The user must be authenticated and have the necessary permissions.",
+ *     tags={"Fonctionnalités"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="The email spam details",
+ *         @OA\JsonContent(
+ *             required={"recipient_email", "subject", "content", "count"},
+ *             @OA\Property(
+ *                 property="recipient_email",
+ *                 type="string",
+ *                 format="email",
+ *                 description="The email address of the recipient",
+ *                 example="test@example.com"
+ *             ),
+ *             @OA\Property(
+ *                 property="subject",
+ *                 type="string",
+ *                 description="The subject of the spam emails",
+ *                 example="Important Update"
+ *             ),
+ *             @OA\Property(
+ *                 property="content",
+ *                 type="string",
+ *                 description="The content of the spam emails",
+ *                 example="This is a spam email for testing purposes."
+ *             ),
+ *             @OA\Property(
+ *                 property="count",
+ *                 type="integer",
+ *                 format="int32",
+ *                 description="The number of emails to send",
+ *                 example=5
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Emails sent successfully",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Emails sent successfully!"),
+ *             @OA\Property(property="email_count", type="integer", example=5)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Validation errors or invalid request data",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="Validation error"),
+ *             @OA\Property(property="details", type="array", @OA\Items(type="string"))
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Authentication or authorization error",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="User not authenticated or insufficient permissions")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Internal server error",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="Failed to send emails"),
+ *             @OA\Property(property="details", type="string", example="Error details here")
+ *         )
+ *     )
+ * )
+ */
+
     function verifRoles($fonctionnalite_id, $current_role_id)
     {
         try {
@@ -78,7 +119,6 @@ class EmailSpammerController extends Controller
         $content = $validatedData['content'];
         $count = $validatedData['count'];
 
-        // Load mail configuration from .env
         config([
             'mail.mailers.smtp.host' => env('MAIL_HOST'),
             'mail.mailers.smtp.port' => env('MAIL_PORT'),

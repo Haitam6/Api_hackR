@@ -15,7 +15,7 @@ class PasswordGeneratorController extends Controller
      * @OA\Get(
      *     path="/api/generate-password",
      *     summary="Generate a Secure Password",
-     *     description="Generates a secure password with at least one uppercase letter, one lowercase letter, one number, and one special character.",
+     *     description="Generates a secure password containing at least one uppercase letter, one lowercase letter, one number, and one special character. The default password length is 12 characters, but you can specify a different length.",
      *     operationId="generateSecurePassword",
      *     tags={"Fonctionnalités"},
      *     security={{"bearerAuth": {}}},
@@ -24,14 +24,18 @@ class PasswordGeneratorController extends Controller
      *         in="query",
      *         description="The length of the generated password (default is 12 if not provided)",
      *         required=false,
-     *         @OA\Schema(type="integer", default=12)
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=12,
+     *             example=16
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successfully generated secure password",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="password", type="string", description="Generated password"),
+     *             @OA\Property(property="password", type="string", description="The generated secure password"),
      *             @OA\Property(property="message", type="string", description="Success message")
      *         )
      *     ),

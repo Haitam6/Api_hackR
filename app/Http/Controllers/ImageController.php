@@ -12,42 +12,55 @@ use App\Models\Role;
 
 class ImageController extends Controller
 {
-/**
- * @OA\Get(
- *     path="/api/random-image",
- *     summary="Fetch a random image",
- *     tags={"Fonctionnalités"},
- *    security={{"bearerAuth":{}}},
- *     @OA\Response(
- *         response=200,
- *         description="Random image retrieved successfully",
- *         content={
- *             @OA\MediaType(
- *                 mediaType="image/jpeg",
- *                 schema={
- *                     @OA\Schema(type="string", format="binary")
- *                 }
- *             )
- *         }
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="User not authenticated",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="error", type="string", example="You are not authenticated.")
- *         )
- *     ),
- *     @OA\Response(
- *         response=500,
- *         description="Failed to fetch image",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="error", type="string", example="Failed to fetch the image.")
- *         )
- *     )
- * )
- */
+ /**
+     * @OA\Get(
+     *     path="/api/random-image",
+     *     summary="Fetch a random image",
+     *     description="Fetches a random image from an external service and returns it.",
+     *     operationId="fetchRandomImage",
+     *     tags={"Fonctionnalités"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Random image retrieved successfully",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="image/jpeg",
+     *                 schema={
+     *                     @OA\Schema(type="string", format="binary")
+     *                 }
+     *             )
+     *         }
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized - User is not authenticated",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             example={"error": "You are not authenticated."},
+     *             @OA\Property(property="error", type="string", description="Error message")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden - User does not have the necessary permissions",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             example={"error": "Vous n'avez pas le droit pour faire cela."},
+     *             @OA\Property(property="error", type="string", description="Error message")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error - Failed to fetch the image",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             example={"error": "Failed to fetch the image."},
+     *             @OA\Property(property="error", type="string", description="Error message")
+     *         )
+     *     )
+     * )
+     */
     function verifRoles($fonctionnalite_id, $current_role_id)
     {
         try {

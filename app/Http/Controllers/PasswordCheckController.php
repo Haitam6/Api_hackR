@@ -14,14 +14,20 @@ class PasswordCheckController extends Controller
     /**
      * @OA\Post(
      *     path="/api/check-password",
-     *     summary="Check if a password is common",
+     *     summary="Check password strength",
+     *      description="Check if a password is common from a predefined list.",
      *     tags={"Fonctionnalités"},
-     *    security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"password"},
-     *             @OA\Property(property="password", type="string", example="password123")
+     *             @OA\Property(
+     *                 property="password",
+     *                 type="string",
+     *                 example="password123",
+     *                 description="The password to check if it is common."
+     *             )
      *         )
      *     ),
      *     @OA\Response(
@@ -29,7 +35,7 @@ class PasswordCheckController extends Controller
      *         description="Password check result",
      *         @OA\JsonContent(
      *             type="object",
-     *             example={"message": "The password is common"}
+     *             @OA\Property(property="message", type="string", example="The password is common")
      *         )
      *     ),
      *     @OA\Response(
@@ -45,9 +51,17 @@ class PasswordCheckController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="The password field is required.")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized. User lacks sufficient permissions.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="You do not have permission to perform this action.")
+     *         )
      *     )
      * )
      */
+
 
     function verifRoles($fonctionnalite_id, $current_role_id)
     {

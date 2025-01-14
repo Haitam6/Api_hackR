@@ -18,28 +18,47 @@ class LogController extends Controller
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *        name="nbLogs",
-     *       in="query",
-     *      required=true,
-     *    description="Number of logs to retrieve",
-     *      @OA\Schema(type="integer")
-     * ),
-     * 
-     * 
+     *        in="query",
+     *        required=true,
+     *        description="Number of logs to retrieve",
+     *        @OA\Schema(type="integer", example=10)
+     *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="List of the last logs"
+     *         description="List of the last logs",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="date_action", type="string", format="date-time", example="2025-01-14T15:04:05"),
+     *                 @OA\Property(property="user", type="string", example="Haitam Elqassimi"),
+     *                 @OA\Property(property="fonctionnalite", type="string", example="Email spam")
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="User not authenticated"
+     *         description="User not authenticated",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Utilisateur non authentifié")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Access denied"
+     *         description="Access denied",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Vous n'avez pas le droit pour faire cela, seul l'admin peut le faire.")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Error while retrieving logs"
+     *         description="Error while retrieving logs",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Erreur lors de la récupération des logs")
+     *         )
      *     )
      * )
      */
@@ -72,12 +91,12 @@ class LogController extends Controller
         }
     }
 
-    /**
+     /**
      * @OA\Post(
      *     path="/api/getLogsByUser",
      *     summary="Get logs by user",
      *     tags={"Logs"},
-     * security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -86,23 +105,48 @@ class LogController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="List of logs for the user"
+     *         description="List of logs for the user",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="date_action", type="string", format="date-time", example="2025-01-14T15:04:05"),
+     *                 @OA\Property(property="user", type="string", example="Haitam Elqassimi"),
+     *                 @OA\Property(property="fonctionnalite", type="string", example="Email spam")
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="User not authenticated"
+     *         description="User not authenticated",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Utilisateur non authentifié")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Access denied"
+     *         description="Access denied",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Vous n'avez pas le droit pour faire cela, seul l'admin peut le faire.")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="User not found"
+     *         description="User not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Utilisateur non trouvé")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Error while retrieving logs"
+     *         description="Error while retrieving logs",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Erreur lors de la récupération des logs")
+     *         )
      *     )
      * )
      */
@@ -141,12 +185,12 @@ class LogController extends Controller
         }
     }
 
-    /**
+  /**
      * @OA\Post(
      *     path="/api/getLogsByFunctionality",
      *     summary="Get logs by functionality",
      *     tags={"Logs"},
-     * security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -155,23 +199,48 @@ class LogController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="List of logs for the functionality"
+     *         description="List of logs for the functionality",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="date_action", type="string", format="date-time", example="2025-01-14T15:04:05"),
+     *                 @OA\Property(property="user", type="string", example="Haitam Elqassimi"),
+     *                 @OA\Property(property="fonctionnalite", type="string", example="Email spam")
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="User not authenticated"
+     *         description="User not authenticated",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Utilisateur non authentifié")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=403,
-     *         description="Access denied"
+     *         description="Access denied",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Vous n'avez pas le droit pour faire cela, seul l'admin peut le faire.")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Functionality not found"
+     *         description="Functionality not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Fonctionnalité non trouvée")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Error while retrieving logs"
+     *         description="Error while retrieving logs",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Erreur lors de la récupération des logs")
+     *         )
      *     )
      * )
      */

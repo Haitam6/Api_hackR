@@ -12,24 +12,26 @@ use App\Models\Role;
 class CrawlerController extends Controller
 {
     /**
-     * @OA\Post(
-     *     path="/api/crawlerInformation",
-     *     summary="Retrieve information using a search query",
-     *     description="Fetches search results using an external API and logs the action.",
-     *     tags={"Fonctionnalités"},
-     *    security={{"bearerAuth":{}}},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="search",
-     *                 type="string",
-     *                 description="Search query for the crawler.",
-     *                 example="My digital school"
-     *             )
-     *         )
-     *     ),
+ * @OA\Post(
+ *     path="/api/crawlerInformation",
+ *     summary="Retrieve information using a search query",
+ *     description="Fetches search results from an external API based on the provided search query.",
+ *     tags={"Fonctionnalités"},
+ *     security={{"bearerAuth":{}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="Input parameters for the search operation.",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             required={"search"},
+ *             @OA\Property(
+ *                 property="search",
+ *                 type="string",
+ *                 description="The search query string to fetch results for.",
+ *                 example="My digital school"
+ *             )
+ *         )
+ *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Search results returned successfully.",
@@ -42,18 +44,19 @@ class CrawlerController extends Controller
      *             )
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="User not authenticated.",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="error",
-     *                 type="string",
-     *                 example="You are not authenticated"
-     *             )
-     *         )
-     *     ),
+    *     @OA\Response(
+    *         response=401,
+    *         description="User not authenticated or lacking required permissions.",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(
+    *                 property="error",
+    *                 type="string",
+    *                 description="Authentication or authorization error message.",
+    *                 example="You are not authenticated "
+    *             )
+    *         )
+    *     ),
      *     @OA\Response(
      *         response=500,
      *         description="An error occurred.",

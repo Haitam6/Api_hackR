@@ -13,43 +13,52 @@ use App\Models\Role;
 
 class EmailVerificationController extends Controller
 {
-    /**
+     /**
      * @OA\Get(
      *     path="/api/verify-email/{email}",
-     *     summary="Verify email using Hunter.io API",
+     *     summary="Verify an email address.",
+     *     description="This feature verifies an email address.",
      *     tags={"Fonctionnalités"},
-     *     security={{"bearerAuth":{}}},
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="email",
      *         in="path",
+     *         description="The email address to verify.",
      *         required=true,
-     *         description="Email to verify",
-     *         @OA\Schema(type="string", example="example@domain.com")
+     *         @OA\Schema(type="string", format="email", example="example@domain.com")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Email verification result",
+     *         description="Email verification was successful.",
      *         @OA\JsonContent(
-     *             type="object",
-     *             example={
-     *                 "data": {
-     *                     "email": "example@domain.com",
-     *                     "result": "deliverable",
-     *                     "score": 95
-     *                 }
-     *             }
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="email", type="string", example="example@domain.com"),
+     *                 @OA\Property(property="result", type="string", example="deliverable"),
+     *                 @OA\Property(property="score", type="integer", example=95),
+     *                 @OA\Property(property="smtp_check", type="boolean", example=true),
+     *                 @OA\Property(property="regex", type="boolean", example=true),
+     *                 @OA\Property(property="gibberish", type="boolean", example=false),
+     *                 @OA\Property(property="disposable", type="boolean", example=false)
+     *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="User not authenticated",
+     *         description="Authentication failed.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="User not authenticated")
      *         )
      *     ),
      *     @OA\Response(
+     *         response=403,
+     *         description="Access denied.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Vous n'avez pas le droit pour faire cela.")
+     *         )
+     *     ),
+     *     @OA\Response(
      *         response=400,
-     *         description="Email verification failed",
+     *         description="Bad request or email verification failed.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="Email verification failed")
      *         )

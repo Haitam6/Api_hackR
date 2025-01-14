@@ -12,22 +12,27 @@
                     "Authentification"
                 ],
                 "summary": "Register a new user",
+                "description": "Create a new user account by providing a name, email, and password. The password is validated to ensure it's not too common.",
                 "operationId": "8a56853624e025573120a09a4c75d468",
                 "requestBody": {
+                    "description": "User details for registration",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
                                     "name": {
+                                        "description": "Full name of the user",
                                         "type": "string",
                                         "example": "Test Api"
                                     },
                                     "email": {
+                                        "description": "User's email address",
                                         "type": "string",
                                         "example": "TestApi@test.com"
                                     },
                                     "password": {
+                                        "description": "Secure password for the user",
                                         "type": "string",
                                         "example": "Password123@"
                                     }
@@ -45,14 +50,17 @@
                                 "schema": {
                                     "properties": {
                                         "access_token": {
+                                            "description": "JWT token for authentication",
                                             "type": "string",
                                             "example": "jwt.token.here"
                                         },
                                         "token_type": {
+                                            "description": "Token type",
                                             "type": "string",
                                             "example": "bearer"
                                         },
                                         "expires_in": {
+                                            "description": "Token validity duration in seconds",
                                             "type": "integer",
                                             "example": 3600
                                         }
@@ -63,10 +71,44 @@
                         }
                     },
                     "400": {
-                        "description": "Common password error"
+                        "description": "Common password error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The password you provided is too common. Please choose a more secure password."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed for one or more fields."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "The email field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -77,18 +119,22 @@
                     "Authentification"
                 ],
                 "summary": "User login",
+                "description": "Authenticate a user using their email and password, and return a JWT token upon success.",
                 "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
                 "requestBody": {
+                    "description": "Login credentials",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
                                     "email": {
+                                        "description": "User's registered email",
                                         "type": "string",
                                         "example": "Haitam_elqassimi10@outlook.fr"
                                     },
                                     "password": {
+                                        "description": "User's password",
                                         "type": "string",
                                         "example": "haitam"
                                     }
@@ -106,14 +152,17 @@
                                 "schema": {
                                     "properties": {
                                         "access_token": {
+                                            "description": "JWT token for authentication",
                                             "type": "string",
                                             "example": "jwt.token.here"
                                         },
                                         "token_type": {
+                                            "description": "Token type",
                                             "type": "string",
                                             "example": "bearer"
                                         },
                                         "expires_in": {
+                                            "description": "Token validity duration in seconds",
                                             "type": "integer",
                                             "example": 3600
                                         }
@@ -124,7 +173,20 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -135,6 +197,7 @@
                     "Authentification"
                 ],
                 "summary": "Get current user profile",
+                "description": "Retrieve the profile information of the currently authenticated user.",
                 "operationId": "023eae4c11807c8d3edd0903770b1e64",
                 "responses": {
                     "200": {
@@ -144,18 +207,22 @@
                                 "schema": {
                                     "properties": {
                                         "email": {
+                                            "description": "User's email address",
                                             "type": "string",
                                             "example": "Haitam_elqassimi10@outlook.fr"
                                         },
                                         "nom": {
+                                            "description": "User's full name",
                                             "type": "string",
                                             "example": "Haitam Elqassimi"
                                         },
                                         "statut": {
+                                            "description": "User's account status",
                                             "type": "string",
                                             "example": "active"
                                         },
                                         "date_creation": {
+                                            "description": "Account creation date",
                                             "type": "string",
                                             "format": "date-time",
                                             "example": "2023-01-01T00:00:00Z"
@@ -167,7 +234,20 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token absent or invalid"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -183,16 +263,20 @@
                     "Fonctionnalités"
                 ],
                 "summary": "Retrieve information using a search query",
-                "description": "Fetches search results using an external API and logs the action.",
+                "description": "Fetches search results from an external API based on the provided search query.",
                 "operationId": "6081a109027b7974e5f60bb0437e1ccb",
                 "requestBody": {
+                    "description": "Input parameters for the search operation.",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "search"
+                                ],
                                 "properties": {
                                     "search": {
-                                        "description": "Search query for the crawler.",
+                                        "description": "The search query string to fetch results for.",
                                         "type": "string",
                                         "example": "My digital school"
                                     }
@@ -220,14 +304,15 @@
                         }
                     },
                     "401": {
-                        "description": "User not authenticated.",
+                        "description": "User not authenticated or lacking required permissions.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
+                                            "description": "Authentication or authorization error message.",
                                             "type": "string",
-                                            "example": "You are not authenticated"
+                                            "example": "You are not authenticated "
                                         }
                                     },
                                     "type": "object"
@@ -265,8 +350,10 @@
                     "Fonctionnalités"
                 ],
                 "summary": "Simulate a high traffic load on a target server",
+                "description": "This feature performs a load test by sending a specified number of HTTP requests to a given URL. The test results include HTTP status codes and response reasons. Authentication and role verification are required.",
                 "operationId": "210be8edfdf3c5b6815f859d6cf388bd",
                 "requestBody": {
+                    "description": "Input parameters for the load test.",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -277,11 +364,13 @@
                                 ],
                                 "properties": {
                                     "url": {
+                                        "description": "The target URL to load test.",
                                         "type": "string",
                                         "format": "url",
                                         "example": "https://example.com"
                                     },
                                     "requests": {
+                                        "description": "The number of requests to send to the target URL.",
                                         "type": "integer",
                                         "maximum": 100,
                                         "minimum": 1,
@@ -295,24 +384,28 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Load test completed successfully",
+                        "description": "Load test completed successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
+                                            "description": "Success message.",
                                             "type": "string",
                                             "example": "Load test completed successfully."
                                         },
                                         "results": {
+                                            "description": "Details of each HTTP request sent during the load test.",
                                             "type": "array",
                                             "items": {
                                                 "properties": {
                                                     "status": {
+                                                        "description": "HTTP status code of the response.",
                                                         "type": "integer",
                                                         "example": 200
                                                     },
                                                     "reason": {
+                                                        "description": "HTTP reason phrase of the response.",
                                                         "type": "string",
                                                         "example": "OK"
                                                     }
@@ -327,12 +420,13 @@
                         }
                     },
                     "401": {
-                        "description": "User not authenticated",
+                        "description": "User not authenticated or lacking required permissions.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
+                                            "description": "Error message for unauthorized access.",
                                             "type": "string",
                                             "example": "You are not authenticated"
                                         }
@@ -343,14 +437,32 @@
                         }
                     },
                     "422": {
-                        "description": "Validation error",
+                        "description": "Validation error due to missing or invalid input data.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
+                                            "description": "Validation error message.",
                                             "type": "string",
                                             "example": "The url and requests fields are required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error occurred during the load test.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message describing the internal server issue.",
+                                            "type": "string",
+                                            "example": "An error occurred: Connection timed out"
                                         }
                                     },
                                     "type": "object"
@@ -377,16 +489,17 @@
                     {
                         "name": "domain",
                         "in": "path",
-                        "description": "The domain name to fetch subdomains for",
+                        "description": "The domain name to fetch subdomains for.",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "example.com"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of subdomains",
+                        "description": "List of subdomains retrieved successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -394,7 +507,8 @@
                                         "subdomains": {
                                             "type": "array",
                                             "items": {
-                                                "type": "string"
+                                                "type": "string",
+                                                "example": "sub.example.com"
                                             }
                                         }
                                     },
@@ -403,8 +517,40 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "User not authenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You are not authenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access forbidden due to insufficient permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Vous n'avez pas le droit pour faire cela."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
-                        "description": "Domain not found",
+                        "description": "Subdomains could not be retrieved.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -420,14 +566,18 @@
                         }
                     },
                     "500": {
-                        "description": "Server error",
+                        "description": "Internal server error.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Internal server error."
+                                            "example": "Erreur interne du serveur."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Specific error details here."
                                         }
                                     },
                                     "type": "object"
@@ -448,28 +598,42 @@
                 "tags": [
                     "Fonctionnalités"
                 ],
-                "summary": "Spam emails to a recipient",
+                "summary": "Spam multiple emails to a recipient",
+                "description": "This feature allows sending a specified number of emails to a recipient with a custom subject and content. The user must be authenticated and have the necessary permissions.",
                 "operationId": "54ad4fc49a13dd4aa0000df5a7ffa54f",
                 "requestBody": {
+                    "description": "The email spam details",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "recipient_email",
+                                    "subject",
+                                    "content",
+                                    "count"
+                                ],
                                 "properties": {
                                     "recipient_email": {
+                                        "description": "The email address of the recipient",
                                         "type": "string",
-                                        "example": "TestSpam@test.com"
+                                        "format": "email",
+                                        "example": "test@example.com"
                                     },
                                     "subject": {
+                                        "description": "The subject of the spam emails",
                                         "type": "string",
-                                        "example": "Spam Subject"
+                                        "example": "Important Update"
                                     },
                                     "content": {
+                                        "description": "The content of the spam emails",
                                         "type": "string",
-                                        "example": "This is the spam content."
+                                        "example": "This is a spam email for testing purposes."
                                     },
                                     "count": {
+                                        "description": "The number of emails to send",
                                         "type": "integer",
+                                        "format": "int32",
                                         "example": 5
                                     }
                                 },
@@ -491,7 +655,45 @@
                                         },
                                         "email_count": {
                                             "type": "integer",
-                                            "example": 10
+                                            "example": 5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors or invalid request data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "details": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication or authorization error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User not authenticated or insufficient permissions"
                                         }
                                     },
                                     "type": "object"
@@ -500,7 +702,7 @@
                         }
                     },
                     "500": {
-                        "description": "Failed to send emails",
+                        "description": "Internal server error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -532,40 +734,70 @@
                 "tags": [
                     "Fonctionnalités"
                 ],
-                "summary": "Verify email using Hunter.io API",
+                "summary": "Verify an email address.",
+                "description": "This feature verifies an email address.",
                 "operationId": "d14d57938c126dcdce83afc1be35903f",
                 "parameters": [
                     {
                         "name": "email",
                         "in": "path",
-                        "description": "Email to verify",
+                        "description": "The email address to verify.",
                         "required": true,
                         "schema": {
                             "type": "string",
+                            "format": "email",
                             "example": "example@domain.com"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Email verification result",
+                        "description": "Email verification was successful.",
                         "content": {
                             "application/json": {
                                 "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "example@domain.com"
+                                                },
+                                                "result": {
+                                                    "type": "string",
+                                                    "example": "deliverable"
+                                                },
+                                                "score": {
+                                                    "type": "integer",
+                                                    "example": 95
+                                                },
+                                                "smtp_check": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "regex": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "gibberish": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "disposable": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
                                     "type": "object"
-                                },
-                                "example": {
-                                    "data": {
-                                        "email": "example@domain.com",
-                                        "result": "deliverable",
-                                        "score": 95
-                                    }
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "User not authenticated",
+                        "description": "Authentication failed.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -580,8 +812,24 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Access denied.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Vous n'avez pas le droit pour faire cela."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "400": {
-                        "description": "Email verification failed",
+                        "description": "Bad request or email verification failed.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -610,7 +858,7 @@
                     "Fonctionnalités"
                 ],
                 "summary": "Generate a Fake Identity",
-                "description": "Generates a fake identity using the Faker library and returns the generated data.",
+                "description": "Generates a fake identity and returns the generated data.",
                 "operationId": "generateFakeIdentity",
                 "responses": {
                     "200": {
@@ -637,12 +885,18 @@
                                         }
                                     },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "name": "Kevin Niel",
+                                    "email": "Niel_kevin@mds.com",
+                                    "address": "5 avenue de la République, 75001 Paris",
+                                    "phone": "+33 6 12 34 56 78"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Unauthorized - User is not authenticated or does not have the right to access the functionality",
+                        "description": "Unauthorized - User is not authenticated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -653,6 +907,9 @@
                                         }
                                     },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "error": "You are not authenticated"
                                 }
                             }
                         }
@@ -669,6 +926,9 @@
                                         }
                                     },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "error": "Vous n'avez pas le droit pour faire cela."
                                 }
                             }
                         }
@@ -687,7 +947,8 @@
                     "Fonctionnalités"
                 ],
                 "summary": "Fetch a random image",
-                "operationId": "2f18c87654589cee5a98348703991d44",
+                "description": "Fetches a random image from an external service and returns it.",
+                "operationId": "fetchRandomImage",
                 "responses": {
                     "200": {
                         "description": "Random image retrieved successfully",
@@ -703,33 +964,58 @@
                         }
                     },
                     "401": {
-                        "description": "User not authenticated",
+                        "description": "Unauthorized - User is not authenticated",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
-                                            "type": "string",
-                                            "example": "You are not authenticated."
+                                            "description": "Error message",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "error": "You are not authenticated."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - User does not have the necessary permissions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "Vous n'avez pas le droit pour faire cela."
                                 }
                             }
                         }
                     },
                     "500": {
-                        "description": "Failed to fetch image",
+                        "description": "Internal Server Error - Failed to fetch the image",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
-                                            "type": "string",
-                                            "example": "Failed to fetch the image."
+                                            "description": "Error message",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "error": "Failed to fetch the image."
                                 }
                             }
                         }
@@ -756,22 +1042,87 @@
                         "description": "Number of logs to retrieve",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 10
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of the last logs"
+                        "description": "List of the last logs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "date_action": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-01-14T15:04:05"
+                                            },
+                                            "user": {
+                                                "type": "string",
+                                                "example": "Haitam Elqassimi"
+                                            },
+                                            "fonctionnalite": {
+                                                "type": "string",
+                                                "example": "Email spam"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "description": "User not authenticated"
+                        "description": "User not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Utilisateur non authentifié"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "403": {
-                        "description": "Access denied"
+                        "description": "Access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Vous n'avez pas le droit pour faire cela, seul l'admin peut le faire."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error while retrieving logs"
+                        "description": "Error while retrieving logs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erreur lors de la récupération des logs"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -806,19 +1157,96 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "List of logs for the user"
+                        "description": "List of logs for the user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "date_action": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-01-14T15:04:05"
+                                            },
+                                            "user": {
+                                                "type": "string",
+                                                "example": "Haitam Elqassimi"
+                                            },
+                                            "fonctionnalite": {
+                                                "type": "string",
+                                                "example": "Email spam"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "description": "User not authenticated"
+                        "description": "User not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Utilisateur non authentifié"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "403": {
-                        "description": "Access denied"
+                        "description": "Access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Vous n'avez pas le droit pour faire cela, seul l'admin peut le faire."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Utilisateur non trouvé"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error while retrieving logs"
+                        "description": "Error while retrieving logs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erreur lors de la récupération des logs"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -853,19 +1281,96 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "List of logs for the functionality"
+                        "description": "List of logs for the functionality",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "date_action": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-01-14T15:04:05"
+                                            },
+                                            "user": {
+                                                "type": "string",
+                                                "example": "Haitam Elqassimi"
+                                            },
+                                            "fonctionnalite": {
+                                                "type": "string",
+                                                "example": "Email spam"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "description": "User not authenticated"
+                        "description": "User not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Utilisateur non authentifié"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "403": {
-                        "description": "Access denied"
+                        "description": "Access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Vous n'avez pas le droit pour faire cela, seul l'admin peut le faire."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Functionality not found"
+                        "description": "Functionality not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Fonctionnalité non trouvée"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "500": {
-                        "description": "Error while retrieving logs"
+                        "description": "Error while retrieving logs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erreur lors de la récupération des logs"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -880,7 +1385,8 @@
                 "tags": [
                     "Fonctionnalités"
                 ],
-                "summary": "Check if a password is common",
+                "summary": "Check password strength",
+                "description": "Check if a password is common from a predefined list.",
                 "operationId": "c161d6c59a7e9f3b935b56a713b5d432",
                 "requestBody": {
                     "required": true,
@@ -892,6 +1398,7 @@
                                 ],
                                 "properties": {
                                     "password": {
+                                        "description": "The password to check if it is common.",
                                         "type": "string",
                                         "example": "password123"
                                     }
@@ -907,10 +1414,13 @@
                         "content": {
                             "application/json": {
                                 "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The password is common"
+                                        }
+                                    },
                                     "type": "object"
-                                },
-                                "example": {
-                                    "message": "The password is common"
                                 }
                             }
                         }
@@ -946,6 +1456,22 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized. User lacks sufficient permissions.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "You do not have permission to perform this action."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -961,7 +1487,7 @@
                     "Fonctionnalités"
                 ],
                 "summary": "Generate a Secure Password",
-                "description": "Generates a secure password with at least one uppercase letter, one lowercase letter, one number, and one special character.",
+                "description": "Generates a secure password containing at least one uppercase letter, one lowercase letter, one number, and one special character. The default password length is 12 characters, but you can specify a different length.",
                 "operationId": "generateSecurePassword",
                 "parameters": [
                     {
@@ -971,7 +1497,8 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "default": 12
+                            "default": 12,
+                            "example": 16
                         }
                     }
                 ],
@@ -983,7 +1510,7 @@
                                 "schema": {
                                     "properties": {
                                         "password": {
-                                            "description": "Generated password",
+                                            "description": "The generated secure password",
                                             "type": "string"
                                         },
                                         "message": {
