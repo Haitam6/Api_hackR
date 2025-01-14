@@ -458,7 +458,7 @@
                                 "properties": {
                                     "recipient_email": {
                                         "type": "string",
-                                        "example": "haitam.elqassimi@my-digital-school.org"
+                                        "example": "TestSpam@test.com"
                                     },
                                     "subject": {
                                         "type": "string",

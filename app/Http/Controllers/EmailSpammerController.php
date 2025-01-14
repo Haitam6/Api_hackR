@@ -23,7 +23,7 @@ class EmailSpammerController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="recipient_email", type="string", example="haitam.elqassimi@my-digital-school.org"),
+     *             @OA\Property(property="recipient_email", type="string", example="TestSpam@test.com"),
      *             @OA\Property(property="subject", type="string", example="Spam Subject"),
      *             @OA\Property(property="content", type="string", example="This is the spam content."),
      *             @OA\Property(property="count", type="integer", example=5)
