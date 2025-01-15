@@ -131,12 +131,12 @@
                                     "email": {
                                         "description": "User's registered email",
                                         "type": "string",
-                                        "example": "Admin@test.com"
+                                        "example": "Haitam_elqassimi10@outlook.fr"
                                     },
                                     "password": {
                                         "description": "User's password",
                                         "type": "string",
-                                        "example": "Password123@"
+                                        "example": "haitam"
                                     }
                                 },
                                 "type": "object"
