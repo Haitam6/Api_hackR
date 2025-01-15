@@ -13,7 +13,7 @@ class PasswordCheckController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/check-password",
+     *     path="/api/passwords/check",
      *     summary="Check password strength",
      *      description="Check if a password is common from a predefined list.",
      *     tags={"Fonctionnalités"},

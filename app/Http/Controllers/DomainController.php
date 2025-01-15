@@ -15,7 +15,7 @@ class DomainController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/subdomains/{domain}",
+     *     path="/api/domains/{domain}/subdomains",
      *     summary="Retrieve subdomains of a given domain",
      *     tags={"Fonctionnalités"},
      *     security={{"bearerAuth":{}}},

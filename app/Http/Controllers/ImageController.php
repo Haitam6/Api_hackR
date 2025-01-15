@@ -14,7 +14,7 @@ class ImageController extends Controller
 {
  /**
      * @OA\Get(
-     *     path="/api/random-image",
+     *     path="/api/images/random",
      *     summary="Fetch a random image",
      *     description="Fetches a random image from an external service and returns it.",
      *     operationId="fetchRandomImage",

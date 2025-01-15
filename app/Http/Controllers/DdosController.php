@@ -15,7 +15,7 @@ class DdosController extends Controller
 {
     /**
  * @OA\Post(
- *     path="/api/Ddos",
+ *     path="/api/tests/ddos",
  *     summary="Simulate a high traffic load on a target server",
  *     description="This feature performs a load test by sending a specified number of HTTP requests to a given URL. The test results include HTTP status codes and response reasons. Authentication and role verification are required.",
  *     tags={"Fonctionnalités"},

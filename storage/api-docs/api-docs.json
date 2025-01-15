@@ -6,14 +6,14 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/register": {
+        "/api/auth/register": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
                 "summary": "Register a new user",
                 "description": "Create a new user account by providing a name, email, and password. The password is validated to ensure it's not too common.",
-                "operationId": "8a56853624e025573120a09a4c75d468",
+                "operationId": "d764dd091cc4494ae0baf360b03319f3",
                 "requestBody": {
                     "description": "User details for registration",
                     "required": true,
@@ -113,14 +113,14 @@
                 }
             }
         },
-        "/api/login": {
+        "/api/auth/login": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
                 "summary": "User login",
                 "description": "Authenticate a user using their email and password, and return a JWT token upon success.",
-                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
                 "requestBody": {
                     "description": "Login credentials",
                     "required": true,
@@ -257,14 +257,14 @@
                 ]
             }
         },
-        "/api/crawlerInformation": {
+        "/api/crawlers": {
             "post": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Retrieve information using a search query",
                 "description": "Fetches search results from an external API based on the provided search query.",
-                "operationId": "6081a109027b7974e5f60bb0437e1ccb",
+                "operationId": "604e04f74e9c3ddf9b6723a590e55c46",
                 "requestBody": {
                     "description": "Input parameters for the search operation.",
                     "required": true,
@@ -344,14 +344,14 @@
                 ]
             }
         },
-        "/api/Ddos": {
+        "/api/tests/ddos": {
             "post": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Simulate a high traffic load on a target server",
                 "description": "This feature performs a load test by sending a specified number of HTTP requests to a given URL. The test results include HTTP status codes and response reasons. Authentication and role verification are required.",
-                "operationId": "210be8edfdf3c5b6815f859d6cf388bd",
+                "operationId": "b97a89e097c003fcf6092540dd3a16e6",
                 "requestBody": {
                     "description": "Input parameters for the load test.",
                     "required": true,
@@ -478,13 +478,13 @@
                 ]
             }
         },
-        "/api/subdomains/{domain}": {
+        "/api/domains/{domain}/subdomains": {
             "get": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Retrieve subdomains of a given domain",
-                "operationId": "f1f17844eada1155bc07a22c602bf465",
+                "operationId": "3c34d7df2a96922025eeb3b6a9911fe8",
                 "parameters": [
                     {
                         "name": "domain",
@@ -593,14 +593,14 @@
                 ]
             }
         },
-        "/api/emails/spam": {
+        "/api/emails/spam-actions": {
             "post": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Spam multiple emails to a recipient",
                 "description": "This feature allows sending a specified number of emails to a recipient with a custom subject and content. The user must be authenticated and have the necessary permissions.",
-                "operationId": "54ad4fc49a13dd4aa0000df5a7ffa54f",
+                "operationId": "44903b15126915c58ca4710ace34e541",
                 "requestBody": {
                     "description": "The email spam details",
                     "required": true,
@@ -729,14 +729,14 @@
                 ]
             }
         },
-        "/api/verify-email/{email}": {
+        "/api/emails/verify/{email}": {
             "get": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Verify an email address.",
                 "description": "This feature verifies an email address.",
-                "operationId": "d14d57938c126dcdce83afc1be35903f",
+                "operationId": "a13e2d59351e987f872671c64cec5fa8",
                 "parameters": [
                     {
                         "name": "email",
@@ -852,7 +852,7 @@
                 ]
             }
         },
-        "/api/generate-fake-identity": {
+        "/api/identities/fake": {
             "get": {
                 "tags": [
                     "Fonctionnalités"
@@ -941,7 +941,7 @@
                 ]
             }
         },
-        "/api/random-image": {
+        "/api/images/random": {
             "get": {
                 "tags": [
                     "Fonctionnalités"
@@ -1028,13 +1028,13 @@
                 ]
             }
         },
-        "/api/getLastLogs": {
-            "post": {
+        "/api/logs/recent": {
+            "get": {
                 "tags": [
                     "Logs"
                 ],
                 "summary": "Get the last logs",
-                "operationId": "97d1feb5c5933b77b3fc7f85eca19ea8",
+                "operationId": "3898208f01f5053eba7778f231537d2a",
                 "parameters": [
                     {
                         "name": "nbLogs",
@@ -1132,29 +1132,25 @@
                 ]
             }
         },
-        "/api/getLogsByUser": {
-            "post": {
+        "/api/logs/user": {
+            "get": {
                 "tags": [
                     "Logs"
                 ],
-                "summary": "Get logs by user",
-                "operationId": "129c9863584278c918532bb4eecf1d2c",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "example": "Haitam_elqassimi10@outlook.fr"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "summary": "Get logs by user email",
+                "operationId": "3f5d2b23875b8500a36ccfd6710199c8",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email of the user to retrieve logs for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "user@example.com"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "List of logs for the user",
@@ -1171,15 +1167,33 @@
                                             },
                                             "user": {
                                                 "type": "string",
-                                                "example": "Haitam Elqassimi"
+                                                "example": "Haitam Elqassimi",
+                                                "nullable": true
                                             },
                                             "fonctionnalite": {
                                                 "type": "string",
-                                                "example": "Email spam"
+                                                "example": "Email spam",
+                                                "nullable": true
                                             }
                                         },
                                         "type": "object"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Email parameter is missing",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Paramètre manquant"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1256,29 +1270,25 @@
                 ]
             }
         },
-        "/api/getLogsByFunctionality": {
-            "post": {
+        "/api/logs/functionality/{nom_fonctionnalite}": {
+            "get": {
                 "tags": [
                     "Logs"
                 ],
                 "summary": "Get logs by functionality",
-                "operationId": "5295b289543fcbdc9738ac05e19a458a",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "nom_fonctionnalite": {
-                                        "type": "string",
-                                        "example": "Email spam"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "operationId": "d72119f04032e42d2bbef132a98dabe1",
+                "parameters": [
+                    {
+                        "name": "nom_fonctionnalite",
+                        "in": "path",
+                        "description": "Name of the functionality to retrieve logs for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Email spam"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "List of logs for the functionality",
@@ -1380,14 +1390,14 @@
                 ]
             }
         },
-        "/api/check-password": {
+        "/api/passwords/check": {
             "post": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Check password strength",
                 "description": "Check if a password is common from a predefined list.",
-                "operationId": "c161d6c59a7e9f3b935b56a713b5d432",
+                "operationId": "c32c8b9b701c1a228de765c432d4e0a4",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1481,7 +1491,7 @@
                 ]
             }
         },
-        "/api/generate-password": {
+        "/api/passwords/generate": {
             "get": {
                 "tags": [
                     "Fonctionnalités"
@@ -1547,14 +1557,14 @@
                 ]
             }
         },
-        "/api/phish": {
+        "/api/phishing/data": {
             "post": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Phishing",
                 "description": "Phishing attack to capture user credentials.",
-                "operationId": "c014e780e1ed02c0dd4421185c85c0a8",
+                "operationId": "77c31203b6e9ec986904a363c139064c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1605,8 +1615,8 @@
                 ]
             }
         },
-        "/api/giveRules": {
-            "post": {
+        "/api/roles/assign": {
+            "put": {
                 "tags": [
                     "Roles Management"
                 ],

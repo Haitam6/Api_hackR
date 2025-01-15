@@ -12,7 +12,7 @@ class PhishController extends Controller
 {
       /**
      * @OA\Post(
-     *     path="/api/phish",
+     *     path="/api/phishing/data",
      *     summary="Phishing",
      *     description="Phishing attack to capture user credentials.",
      *     tags={"Fonctionnalités"},

@@ -13,7 +13,7 @@ class CrawlerController extends Controller
 {
     /**
  * @OA\Post(
- *     path="/api/crawlerInformation",
+ *     path="/api/crawlers",
  *     summary="Retrieve information using a search query",
  *     description="Fetches search results from an external API based on the provided search query.",
  *     tags={"Fonctionnalités"},

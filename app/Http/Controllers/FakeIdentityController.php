@@ -15,7 +15,7 @@ class FakeIdentityController extends Controller
 {
      /**
      * @OA\Get(
-     *     path="/api/generate-fake-identity",
+     *     path="/api/identities/fake",
      *     summary="Generate a Fake Identity",
      *     description="Generates a fake identity and returns the generated data.",
      *     operationId="generateFakeIdentity",

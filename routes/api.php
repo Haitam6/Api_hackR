@@ -16,24 +16,42 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\CrawlerController;
 use App\Http\Controllers\LogController;
 
+// Voici les routes post de l'application
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+
+Route::put('/roles/assign', [RolesController::class, 'giveRules']);
+
+Route::post('/passwords/check', [PasswordCheckController::class, 'isCommonPassword']);
+
+Route::post('/emails/spam-actions', [EmailSpammerController::class, 'spamEmails']); 
+
+Route::post('/passwords/generate', [PasswordGeneratorController::class, 'generateSecurePassword']);
+
+Route::post('/tests/ddos', [DdosController::class, 'DdosTest']);
+
+Route::post('/phishing', [PhishController::class, 'handlePhish']);
+
+Route::post('/phishing/data', [PhishController::class, 'handlePhishData']);
+
+Route::post('/crawlers', [CrawlerController::class, 'crawlerInformation']);
+
+// Voici les routes get de l'application
+
 Route::get('/users/me', [AuthController::class, 'me']); 
-Route::post('/giveRules', [RolesController::class, 'giveRules']);
 
+Route::get('/emails/verify/{email}', [EmailVerificationController::class, 'verifyEmail']);
 
-Route::get('/verify-email/{email}', [EmailVerificationController::class, 'verifyEmail']);
-Route::post('/check-password', [PasswordCheckController::class, 'isCommonPassword']);
-Route::post('/emails/spam', [EmailSpammerController::class, 'spamEmails']); 
-Route::get('/generate-password', [PasswordGeneratorController::class, 'generateSecurePassword']);
-Route::get('/subdomains/{domain}', [DomainController::class, 'getSubdomains']);
-Route::get('/generate-fake-identity', [FakeIdentityController::class, 'generateFakeIdentity']);
-Route::post('/Ddos', [DdosController::class, 'DdosTest']);
-Route::get('/random-image', [ImageController::class, 'fetchRandomImage']);
-Route::post('/phish', [PhishController::class, 'handlePhish']);
-Route::post('/phish/handlePhishData', [PhishController::class, 'handlePhishData']);
-Route::post('/crawlerInformation', [CrawlerController::class, 'crawlerInformation']);
-Route::post('/getLastLogs', [LogController::class, 'getLastLogs']);
-Route::post('/getLogsByUser', [LogController::class, 'getLogsByUser']);
-Route::post('/getLogsByFunctionality', [LogController::class, 'getLogsByFunctionality']);
+Route::get('/domains/{domain}/subdomains', [DomainController::class, 'getSubdomains']);
+
+Route::get('/identities/fake', [FakeIdentityController::class, 'generateFakeIdentity']);
+
+Route::get('/images/random', [ImageController::class, 'fetchRandomImage']);
+
+Route::get('/logs/functionality/{nom_fonctionnalite}', [LogController::class, 'getLogsByFunctionality']);
+
+Route::get('/logs/recent', [LogController::class, 'getLastLogs']);
+
+Route::get('/logs/user', [LogController::class, 'getLogsByUser']);

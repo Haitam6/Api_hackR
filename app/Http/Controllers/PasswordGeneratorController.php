@@ -13,7 +13,7 @@ class PasswordGeneratorController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/generate-password",
+     *     path="/api/passwords/generate",
      *     summary="Generate a Secure Password",
      *     description="Generates a secure password containing at least one uppercase letter, one lowercase letter, one number, and one special character. The default password length is 12 characters, but you can specify a different length.",
      *     operationId="generateSecurePassword",

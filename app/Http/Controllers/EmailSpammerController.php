@@ -16,7 +16,7 @@ class EmailSpammerController extends Controller
 {
     /**
  * @OA\Post(
- *     path="/api/emails/spam",
+ *     path="/api/emails/spam-actions",
  *     summary="Spam multiple emails to a recipient",
  *     description="This feature allows sending a specified number of emails to a recipient with a custom subject and content. The user must be authenticated and have the necessary permissions.",
  *     tags={"Fonctionnalités"},

@@ -15,7 +15,7 @@ class EmailVerificationController extends Controller
 {
      /**
      * @OA\Get(
-     *     path="/api/verify-email/{email}",
+     *     path="/api/emails/verify/{email}",
      *     summary="Verify an email address.",
      *     description="This feature verifies an email address.",
      *     tags={"Fonctionnalités"},

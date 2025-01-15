@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/register",
+     *     path="/api/auth/register",
      *     summary="Register a new user",
      *     tags={"Authentification"},
      *     description="Create a new user account by providing a name, email, and password. The password is validated to ensure it's not too common.",
@@ -85,7 +85,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/login",
+     *     path="/api/auth/login",
      *     summary="User login",
      *     tags={"Authentification"},
      *     description="Authenticate a user using their email and password, and return a JWT token upon success.",
