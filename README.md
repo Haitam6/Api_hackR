@@ -48,10 +48,11 @@ Prérequis :
 - Laravel
 
 1. Cloner le projet : `git clone https://github.com/Haitam6/Api_hackR.git`
+`cd Api_hackR`
 2. Installer les dépendances : `composer install`
 3. Copier le fichier .env.example dans le .env : `cp .env.example .env`
 4. Générer la clé : `php artisan key:generate`
-5. Créer une base de données
+5. Créer une base de données 
 6. Lancer les migrations : `php artisan migrate --seed`
 7. Lancer le serveur : `php artisan serve`
 
