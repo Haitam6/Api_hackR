@@ -56,5 +56,7 @@ Prérequis :
 6. Lancer les migrations : `php artisan migrate:fresh --seed`
 7. Lancer le serveur : `php artisan serve`
 
+Pour tester les fonctionnalité en tant qu'admin j'ai créé un compte admin avec les identifiants suivants : Email = Admin@test.com
+Mot de passe = Password123@
 
 

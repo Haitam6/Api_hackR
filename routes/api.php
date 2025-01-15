@@ -28,7 +28,6 @@ Route::post('/passwords/check', [PasswordCheckController::class, 'isCommonPasswo
 
 Route::post('/emails/spam-actions', [EmailSpammerController::class, 'spamEmails']); 
 
-Route::post('/passwords/generate', [PasswordGeneratorController::class, 'generateSecurePassword']);
 
 Route::post('/tests/ddos', [DdosController::class, 'DdosTest']);
 
@@ -47,6 +46,8 @@ Route::get('/domains/{domain}/subdomains', [DomainController::class, 'getSubdoma
 Route::get('/identities/fake', [FakeIdentityController::class, 'generateFakeIdentity']);
 
 Route::get('/images/random', [ImageController::class, 'fetchRandomImage']);
+
+Route::get('/passwords/generate', [PasswordGeneratorController::class, 'generateSecurePassword']);
 
 Route::get('/logs/functionality/{nom_fonctionnalite}', [LogController::class, 'getLogsByFunctionality']);
 
