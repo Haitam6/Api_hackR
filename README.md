@@ -1,8 +1,24 @@
 # Api_hackR
 
-Bonjour, voici le readme de mon projet API HackR.
+Bonjour, voici le readme de mon projet API HackR réalisé en laravel.
 
-Tout d'abord voici les fonctionnalités de mon projet, ainsi que leurs id qui peux être utile pour les tester: 
+# Etapes à suivre pour tester les fonctionnalités :
+
+1. Rendez-vous sur ce lien : https://haitam.elqassimi.angers.mds-project.fr/api/documentation
+2. Créez un compte en utilisant la fonctionnalité Register qui se situe dans le tag Authentification.
+
+   Si vous souhaitez avoir un compte admin connectez-vous directement avec les identifiants suivants dans la fonctionnalités login : 
+    - email :Haitam_elqassimi10@outlook.fr
+    - password : haitam
+3. En créant un compte cela génère un token, copiez ce token. 
+Dans le bouton authorize en haut à droite, collez le token dans la case value et cliquez sur authorize.
+4. Vous pouvez maintenant tester les fonctionnalités que vous souhaitez.
+5. Si vous vous connectez avec un compte admin, vous pouvez changer les droits. Pour cela, allez dans le tag Roles Management et vous allez pouvoir donner le droit a l'id de la fonctionnalité que vous voulez tester (se référer au tableau ci-dessus pour connaitre l'id), le rôle 1 vous permet d'avoir le droit et le rôle 2 vous le retire.
+6. Enfin, il existe aussi un système de logs, pour les consulter, allez dans le tag Logs. Vous allez pouvoir voir les derniers logs en renseignant ou non le nombre de logs que vous souhaitez voir, voir les logs d'un utilisateur en question en renseignant son email, ou encore voir les logs d'une fonctionnalité en renseignant son nom.
+
+A noter que seul le compte admin peut voir les logs et donner les droits.
+
+Voici les fonctionnalités de mon projet, ainsi que leurs id qui peux être utile pour les tester: 
 
 | **ID** | **Fonctionnalité**        | **Description**                                         |
 |--------|---------------------------|---------------------------------------------------------|
@@ -20,18 +36,24 @@ Tout d'abord voici les fonctionnalités de mon projet, ainsi que leurs id qui pe
 | 13     | Phishing                  | Phishing                                                 |
 | 14     | Get users profile         | Permet d'avoir le profil de l'utilisateur               |
 
-# Etapes à suivre pour tester les fonctionnalités :
+# Pour tester sur postman 
 
-1. Rendez-vous sur ce lien : https://haitam.elqassimi.angers.mds-project.fr/api/documentation
-2. Créez un compte en utilisant la fonctionnalité Register qui se situe dans le tag Authentification.
+Récupérer le fichier /Hackr_laravel.postman_collection.json et l'importer dans postman. Vous allez retrouver toutes les requêtes pour tester les fonctionnalités. 
 
-   Si vous souhaitez avoir un compte admin connectez-vous directement avec les identifiants suivants dans la fonctionnalités login : 
-    - email :Haitam_elqassimi10@outlook.fr
-    - password : haitam
-3. En créant un compte cela génère un token, copiez ce token. 
-Dans le bouton authorize en haut à droite, collez le token dans la case value et cliquez sur authorize.
-4. Il vous faudra ensuite donner les droits à votre compte pour chaque fonctionnalité que vous souhaitez tester. Pour cela, allez dans le tag Roles Management et vous allez pouvoir donner le droit a l'id de la fonctionnalité que vous voulez tester (se référer au tableau ci-dessus pour connaitre l'id), le rôle 1 vous permet d'avoir le droit et le rôle 2 vous le retire.
-5. Vous pouvez maintenant tester les fonctionnalités que vous souhaitez.
-6. Enfin, il existe aussi un système de logs, pour les consulter, allez dans le tag Logs. Vous allez pouvoir voir les derniers logs en renseignant ou non le nombre de logs que vous souhaitez voir, voir les logs d'un utilisateur en question en renseignant son email, ou encore voir les logs d'une fonctionnalité en renseignant son nom.
+# Pour importer le projet en local
 
-A noter que seul le compte admin peut voir les logs et donner les droits.
+Prérequis :
+- PHP 8.2
+- Composer
+- Laravel
+
+1. Cloner le projet : `git clone https://github.com/Haitam6/Api_hackR.git`
+2. Installer les dépendances : `composer install`
+3. Copier le fichier .env.example dans le .env : `cp .env.example .env`
+4. Générer la clé : `php artisan key:generate`
+5. Créer une base de données
+6. Lancer les migrations : `php artisan migrate --seed`
+7. Lancer le serveur : `php artisan serve`
+
+
+
