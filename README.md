@@ -52,12 +52,18 @@ Prérequis :
 2. Installer les dépendances : `composer install`
 3. Copier le fichier .env.example dans le .env : `cp .env.example .env`
 4. Générer la clé : `php artisan key:generate`
-5. Créer une base de données  
+5. Créer une base de données nommée `hackr_`
 6. Lancer les migrations : `php artisan migrate:fresh --seed`
 7. Lancer le serveur : `php artisan serve`
+8. Ajouter /api/documentation à l'url pour accéder à la documentation de l'api
 
 Pour tester les fonctionnalité en tant qu'admin j'ai créé un compte admin avec les identifiants suivants : Email = Admin@test.com
 Mot de passe = Password123@
+
+
+# Auteurs
+
+EL QASSIMI Haitam
 
 
  
