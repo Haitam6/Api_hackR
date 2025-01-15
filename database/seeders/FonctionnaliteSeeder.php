@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +10,7 @@ class FonctionnaliteSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('functionalites')->insert([
+        DB::table('fonctionnalites')->insert([
             [
                 'id' => 1,
                 'nom_fonctionnalite' => 'Register',

@@ -52,8 +52,8 @@ Prérequis :
 2. Installer les dépendances : `composer install`
 3. Copier le fichier .env.example dans le .env : `cp .env.example .env`
 4. Générer la clé : `php artisan key:generate`
-5. Créer une base de données 
-6. Lancer les migrations : `php artisan migrate --seed`
+5. Créer une base de données  
+6. Lancer les migrations : `php artisan migrate:fresh --seed`
 7. Lancer le serveur : `php artisan serve`
 
 
