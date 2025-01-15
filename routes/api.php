@@ -34,8 +34,6 @@ Route::post('/tests/ddos', [DdosController::class, 'DdosTest']);
 
 Route::post('/phishing', [PhishController::class, 'handlePhish']);
 
-Route::post('/phishing/data', [PhishController::class, 'handlePhishData']);
-
 Route::post('/crawlers', [CrawlerController::class, 'crawlerInformation']);
 
 // Voici les routes get de l'application

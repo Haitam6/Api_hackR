@@ -19,7 +19,7 @@ class LogController extends Controller
      *     @OA\Parameter(
      *         name="nbLogs",
      *         in="query",
-     *         required=true,
+     *         required=false,
      *         description="Number of logs to retrieve",
      *         @OA\Schema(type="integer", example=10)
      *     ),

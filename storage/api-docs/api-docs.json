@@ -1040,7 +1040,7 @@
                         "name": "nbLogs",
                         "in": "query",
                         "description": "Number of logs to retrieve",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "integer",
                             "example": 10
@@ -1557,14 +1557,14 @@
                 ]
             }
         },
-        "/api/phishing/data": {
+        "/api/phishing": {
             "post": {
                 "tags": [
                     "Fonctionnalités"
                 ],
                 "summary": "Phishing",
                 "description": "Phishing attack to capture user credentials.",
-                "operationId": "77c31203b6e9ec986904a363c139064c",
+                "operationId": "1faa030b2ee0bc8c4514e120e4a2d235",
                 "requestBody": {
                     "required": true,
                     "content": {

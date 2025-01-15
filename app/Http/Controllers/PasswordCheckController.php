@@ -63,22 +63,28 @@ class PasswordCheckController extends Controller
      */
 
 
-    function verifRoles($fonctionnalite_id, $current_role_id)
-    {
-        try {
-            $droit = Droit::where('fonctionnalite_id', $fonctionnalite_id)
-                        ->where('role_id', $current_role_id)
-                        ->first();
-
-            if (!$droit) {
-                return false; 
-            }
-
-            return true; 
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
+     function verifRoles($fonctionnalite_id, $current_role_id)
+     {
+         try {
+             $droit = Droit::where('fonctionnalite_id', $fonctionnalite_id)
+                         ->where('role_id', $current_role_id)
+                         ->first();
+     
+             if (!$droit) {
+             
+                 Droit::create([
+                     'fonctionnalite_id' => $fonctionnalite_id,
+                     'role_id' => $current_role_id,
+                     'droit' => 1, 
+                 ]);
+                 return true;
+             }
+     
+             return true; 
+         } catch (\Exception $e) {
+             return false;
+         }
+     }
 
     public function isCommonPassword(Request $request)
     {
