@@ -60,6 +60,9 @@ Prérequis :
 Pour tester les fonctionnalité en tant qu'admin j'ai créé un compte admin avec les identifiants suivants : Email = Admin@test.com
 Mot de passe = Password123@
 
+# Docker
+
+Un docker compose été ajouté pour faciliter le déploiement de l'application. Pour lancer l'application avec docker-compose, il suffit de lancer la commande suivante : `docker-compose up -d`S
 
 # Auteurs
 
