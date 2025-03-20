@@ -1,6 +1,6 @@
 # Api_hackR
 
-Bonjour, voici le readme de mon projet API HackR réalisé en laravel.
+Voici le readme de mon projet API HackR réalisé en laravel.
 
 # Etapes à suivre pour tester les fonctionnalités :
 
