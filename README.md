@@ -57,7 +57,7 @@ Prérequis :
 7. Lancer le serveur : `php artisan serve`
 8. Ajouter /api/documentation à l'url pour accéder à la documentation de l'api
 
-Pour tester les fonctionnalité en tant qu'admin j'ai créé un compte admin avec les identifiants suivants : Email = Admin@test.com
+Pour tester les fonctionnalités en tant qu'admin j'ai créé un compte admin avec les identifiants suivants : Email = Admin@test.com
 Mot de passe = Password123@
 
 # Docker
