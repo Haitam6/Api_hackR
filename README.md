@@ -62,7 +62,7 @@ Mot de passe = Password123@
 
 # Docker
 
-Un docker compose été ajouté pour faciliter le déploiement de l'application. Pour lancer l'application avec docker-compose, il suffit de lancer la commande suivante : `docker-compose up -d`S
+Un docker compose été ajouté pour faciliter le déploiement de l'application. Pour lancer l'application avec docker-compose, il suffit de lancer la commande suivante : `docker-compose up -d`
 
 # Auteurs
 
