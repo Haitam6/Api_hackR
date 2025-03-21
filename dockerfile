@@ -23,9 +23,9 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Changer les permissions du dossier `storage` et `bootstrap/cache`
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod 664 /var/www/html/storage/logs/laravel.log
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache \
+    && chmod 664 /var/www/storage/logs/laravel.log
 
 RUN usermod -u 1000 www-data
 
